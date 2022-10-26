@@ -11,7 +11,13 @@ mat-grid-tile {
   padding: 10px;
 }
 
-.ObjectPalleteContentAllignLeft{
+.HeaderPanelAlign{
+  height: 100%;
+  width: 100%;
+  padding-left: 10px;
+  padding-top: 10px;
+}
+.ObjectPalleteContentAllign{
 
   width: 90%;
   height: 90%;
