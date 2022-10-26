@@ -23,8 +23,12 @@ mat-grid-tile {
   height: 90%;
 }
 
-.CanvasPanelContentAlign{
-  height: 90%;
-  width: 90%;
-
+.CanvasPanleContentAlign{
+  height: 100%;
+  width: 100%;
+}
+.InventInspectorPanelContentAlign{
+  height: 100%;
+  width: 100%;
+  padding-left: 10px;
 }
