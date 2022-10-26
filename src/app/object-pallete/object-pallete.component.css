@@ -1,4 +1,4 @@
-button{
+.ObjectButton{
   background-color: black;
   border: none;
   color: white;
@@ -7,6 +7,9 @@ button{
   text-align: center;
   display: inline-block;
   font-size: 16px;
+}
+.ObjectButton:hover{
+  cursor: pointer;
 }
 
 .buttonGroup{

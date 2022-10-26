@@ -6,7 +6,7 @@
 
 #canvasArea{
   position: absolute;
-
+  background-color: lightgray;
   height: 100%;
   width: 100%;
 }
@@ -17,10 +17,13 @@
   top: 90%;
 }
 
-button{
+.canvastoolButton{
   background-color: white;
   padding: 10px;
   padding-left: 20px;
   padding-right: 20px ;
+}
+.canvastoolButton:hover{
+  cursor: pointer;
 }
 
