@@ -12,9 +12,13 @@
 }
 
 .buttonGroup{
+  margin: 0;
   position: absolute;
-  left: 40%;
+  left: 50%;
   top: 90%;
+  -ms-transform: translateX(-50%);
+  transform: translateX(-50%);
+
 }
 
 .canvastoolButton{
