@@ -10,3 +10,10 @@ mat-grid-tile {
   border: 1px solid black;
   padding: 10px;
 }
+
+.ObjectPalleteContentAllignLeft{
+
+  width: 90%;
+  height: 90%;
+
+}

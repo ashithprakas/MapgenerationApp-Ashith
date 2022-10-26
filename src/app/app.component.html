@@ -1,7 +1,9 @@
 <div class="container">
   <mat-grid-list cols="4" gutterSize="10px" rowHeight="180px">
     <mat-grid-tile colspan="4" rowspan="1" ><app-header></app-header></mat-grid-tile>
-    <mat-grid-tile colspan="1" rowspan="4"><app-object-pallete></app-object-pallete></mat-grid-tile>
+    <mat-grid-tile colspan="1" rowspan="4"><div class="ObjectPalleteContentAllignLeft">
+      <app-object-pallete></app-object-pallete>
+    </div></mat-grid-tile>
     <mat-grid-tile colspan="2" rowspan="3"><app-app-canvas></app-app-canvas></mat-grid-tile>
     <mat-grid-tile colspan="1" rowspan="4"><app-properties-panel></app-properties-panel></mat-grid-tile>
     <mat-grid-tile colspan="2" rowspan="1"><app-event-inspector-panel></app-event-inspector-panel></mat-grid-tile>
