@@ -6,9 +6,10 @@
 
 #canvasArea{
   position: absolute;
-  background-color: lightgray;
+  background-color: aquamarine;
   height: 100%;
   width: 100%;
+
 }
 
 .buttonGroup{
