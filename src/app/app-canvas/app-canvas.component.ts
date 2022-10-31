@@ -1,5 +1,5 @@
-
-import { Component, OnInit ,AfterViewInit,ViewChild,ElementRef} from '@angular/core';
+import { Component, OnInit ,AfterViewInit} from '@angular/core';
+import { fabric } from 'fabric';
 import { CanvasServiceService } from '../services/canvas-service.service';
 
 @Component({
@@ -8,20 +8,33 @@ import { CanvasServiceService } from '../services/canvas-service.service';
   styleUrls: ['./app-canvas.component.css']
 })
 export class AppCanvasComponent implements OnInit,AfterViewInit{
-  @ViewChild('canvasid') _canvasElement? : ElementRef<HTMLCanvasElement>;
 
-  constructor(private canvas:CanvasServiceService) { }
+  constructor(private CanvasServiceHandler:CanvasServiceService) { }
+  private canvas:any;
+  canvasInitialize(){
+    this.canvas = new fabric.Canvas('canvasArea')
+    this.canvas.setWidth(document.body.scrollWidth);
+    this.canvas.setHeight(document.body.scrollHeight);
+    this.canvas.set( 'backgroundColor' ,'grey')
+    console.log("Canvas Initialized");
+  }
+
+  AddShapeToCanvas(ObjectToBeRendered:string){
+    this.canvas.add(ObjectToBeRendered);
+  }
 
   ngOnInit(): void {
-    
+    this.canvasInitialize();
+
+    if(this.CanvasServiceHandler.subsVar==undefined){
+      this.CanvasServiceHandler.subsVar = this.CanvasServiceHandler.invokeAddShapeTOCanvasFunction.subscribe((ObjectToBeRendered:string) =>{
+        this.AddShapeToCanvas(ObjectToBeRendered);
+      })
+    }
   }
+
   ngAfterViewInit(): void {
-    if(this._canvasElement!=undefined){
-      this.canvas.canvasInitialize(this._canvasElement.nativeElement); 
-    }
-    else{
-      console.log("CanvasInitialization Error");
-    }
+    
   }
 
 

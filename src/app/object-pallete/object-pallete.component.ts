@@ -8,19 +8,19 @@ import { CanvasServiceService } from '../services/canvas-service.service';
 })
 export class ObjectPalleteComponent implements OnInit {
 
-  constructor(private canvas:CanvasServiceService) { }
+  constructor(private canvasServiceHandler:CanvasServiceService) { }
 
   ngOnInit(): void {
   }
   addShape(shape:string){
     if(shape == 'rectangle'){
-      this.canvas.addRectangleToCanvas();
+      this.canvasServiceHandler.onObjectPanelButtonClick('rectangle');
     } 
     else if(shape == 'triangle'){
-      this.canvas.addTriangleToCanvas();
+      this.canvasServiceHandler.onObjectPanelButtonClick('triangle');
     }
     else if(shape == 'circle'){
-      this.canvas.addCircleToCanvas();
+      this.canvasServiceHandler.onObjectPanelButtonClick('circle');
     }
     else{
       console.log("Error in shape");
