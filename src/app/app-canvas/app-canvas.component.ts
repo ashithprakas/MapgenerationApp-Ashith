@@ -1,4 +1,4 @@
-import { Component, OnInit ,AfterViewInit} from '@angular/core';
+import { Component, OnInit} from '@angular/core';
 import { fabric } from 'fabric';
 import { CanvasServiceService } from '../services/canvas-service.service';
 
@@ -7,7 +7,7 @@ import { CanvasServiceService } from '../services/canvas-service.service';
   templateUrl: './app-canvas.component.html',
   styleUrls: ['./app-canvas.component.css']
 })
-export class AppCanvasComponent implements OnInit,AfterViewInit{
+export class AppCanvasComponent implements OnInit{
 
   constructor(private CanvasServiceHandler:CanvasServiceService) { }
   private canvas:any;
@@ -25,17 +25,8 @@ export class AppCanvasComponent implements OnInit,AfterViewInit{
 
   ngOnInit(): void {
     this.canvasInitialize();
-
-    if(this.CanvasServiceHandler.subsVar==undefined){
-      this.CanvasServiceHandler.subsVar = this.CanvasServiceHandler.invokeAddShapeTOCanvasFunction.subscribe((ObjectToBeRendered:string) =>{
-        this.AddShapeToCanvas(ObjectToBeRendered);
-      })
-    }
+    this.CanvasServiceHandler.invokeAddShapeTOCanvasFunction.subscribe((ObjectToBeRendered:string)=>{
+      this.AddShapeToCanvas(ObjectToBeRendered)
+    });
   }
-
-  ngAfterViewInit(): void {
-    
-  }
-
-
 }

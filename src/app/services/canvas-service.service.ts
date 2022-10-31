@@ -8,12 +8,9 @@ export class CanvasServiceService {
 
   invokeAddShapeTOCanvasFunction = new EventEmitter();
   subsVar?: Subscription;
-  constructor() { }
 
   onObjectPanelButtonClick(ShapeName:string){
-    var ObjectToBeRendered
-    
-    
+    let ObjectToBeRendered
     if(ShapeName == "rectangle"){
       ObjectToBeRendered = this.initializeRectangle()
     }
@@ -28,7 +25,7 @@ export class CanvasServiceService {
 
   
   initializeRectangle(){
-    var rect = new fabric.Rect({
+    let rect = new fabric.Rect({
       left: 100,
       top: 100,
       stroke:'black',
@@ -41,7 +38,7 @@ export class CanvasServiceService {
   }
 
   initializeCircle(){
-    var circle = new fabric.Circle({
+    let circle = new fabric.Circle({
       left:100,
       top:100,
       stroke:'black',
@@ -54,7 +51,7 @@ export class CanvasServiceService {
   }
 
   initializeTriangle(){
-    var triangle = new fabric.Triangle({
+    let triangle = new fabric.Triangle({
       left:100,
       top:100,
       stroke:'black',
@@ -65,7 +62,4 @@ export class CanvasServiceService {
     });
     return triangle;
   }
-
-
-
 }
