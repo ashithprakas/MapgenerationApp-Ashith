@@ -12,18 +12,9 @@ export class ObjectPalleteComponent implements OnInit {
 
   ngOnInit(): void {
   }
-  addShape(shape:string){
-    if(shape == 'rectangle'){
-      this.canvasServiceHandler.onObjectPanelButtonClick('rectangle');
-    } 
-    else if(shape == 'triangle'){
-      this.canvasServiceHandler.onObjectPanelButtonClick('triangle');
-    }
-    else if(shape == 'circle'){
-      this.canvasServiceHandler.onObjectPanelButtonClick('circle');
-    }
-    else{
-      console.log("Error in shape");
-    }
+  
+  addShape(shapeName:string){
+      this.canvasServiceHandler.onObjectPanelButtonClick(shapeName);
   }
+  
 }

@@ -23,7 +23,6 @@ export class CanvasServiceService {
     else if(ShapeName == "triangle"){
       ObjectToBeRendered = this.initializeTriangle();
     }
-
     this.invokeAddShapeTOCanvasFunction.emit(ObjectToBeRendered);
   }
 
