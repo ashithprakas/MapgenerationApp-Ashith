@@ -6,7 +6,8 @@ import { fabric } from 'fabric';
 @Injectable()
 export class CanvasServiceService {
 
-  invokeAddShapeTOCanvasFunction:Subject<fabric.Circle|fabric.Rect|fabric.Triangle> =  new Subject();
+  invokeAddShapeTOCanvasFunction:Subject<fabric.Object> =  new Subject();
+  invokeAddShapeToCanvasFuntion$ = this.invokeAddShapeTOCanvasFunction.asObservable();
 
   onObjectPanelButtonClick(ShapeName:string){
     let ObjectToBeRendered:fabric.Circle|fabric.Rect|fabric.Triangle;

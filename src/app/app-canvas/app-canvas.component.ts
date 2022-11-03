@@ -19,14 +19,12 @@ export class AppCanvasComponent implements OnInit{
     console.log("Canvas Initialized");
   }
 
-  AddShapeToCanvas(ObjectToBeRendered:fabric.Circle|fabric.Rect|fabric.Triangle){
+  AddShapeToCanvas(ObjectToBeRendered:fabric.Object){
     this.canvas.add(ObjectToBeRendered);
   }
 
   ngOnInit(): void {
     this.canvasInitialize();
-    this.CanvasServiceHandler.invokeAddShapeTOCanvasFunction.subscribe({
-      next: (ObjectFromService) => this.AddShapeToCanvas(ObjectFromService)
-    });
+    this.CanvasServiceHandler.invokeAddShapeToCanvasFuntion$.subscribe((ObjectFromService)=>this.AddShapeToCanvas(ObjectFromService))
   }
 }
