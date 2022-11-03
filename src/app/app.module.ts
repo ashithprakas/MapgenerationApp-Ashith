@@ -10,6 +10,7 @@ import { ObjectPalleteComponent } from './object-pallete/object-pallete.componen
 import { PropertiesPanelComponent } from './properties-panel/properties-panel.component';
 import { AppCanvasComponent } from './app-canvas/app-canvas.component';
 import { EventInspectorPanelComponent } from './event-inspector-panel/event-inspector-panel.component';
+import { CanvasServiceService } from './services/canvas-service.service';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,7 @@ import { EventInspectorPanelComponent } from './event-inspector-panel/event-insp
     BrowserAnimationsModule,
     MatGridListModule
   ],
-  providers: [],
+  providers: [CanvasServiceService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
