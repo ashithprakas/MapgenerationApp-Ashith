@@ -5,11 +5,9 @@
   border-radius: 5px;
   background: black;
   outline: none;
-  -webkit-transition: .2s;
-  transition: opacity .2s;
+  -webkit-transition: 0.2s;
+  transition: opacity 0.2s;
 }
-
-
 
 .slider::-webkit-slider-thumb {
   -webkit-appearance: none;
@@ -29,28 +27,25 @@
   cursor: pointer;
 }
 
-.propertiesInputPanel{
+.propertiesInputPanel {
   width: 100%;
 }
-.strokeColorGroup{
+.strokeColorGroup {
   padding-top: 20px;
-
 }
-.StrokeColorInputStyle{
+.StrokeColorInputStyle {
   float: right;
 }
-.fillColorGroup{
+.fillColorGroup {
   padding-top: 20px;
 }
-.FillColorInputStyle{
+.FillColorInputStyle {
   float: right;
 }
-.angleInputGroup{
+.angleInputGroup {
   padding-top: 20px;
 }
-.AngleInputStyle{
+.AngleInputStyle {
   width: 60%;
   float: right;
 }
-
-

@@ -8,9 +8,8 @@ describe('EventInspectorPanelComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ EventInspectorPanelComponent ]
-    })
-    .compileComponents();
+      declarations: [EventInspectorPanelComponent],
+    }).compileComponents();
   });
 
   beforeEach(() => {

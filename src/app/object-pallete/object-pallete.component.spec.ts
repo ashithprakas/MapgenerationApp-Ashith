@@ -8,9 +8,8 @@ describe('ObjectPalleteComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ObjectPalleteComponent ]
-    })
-    .compileComponents();
+      declarations: [ObjectPalleteComponent],
+    }).compileComponents();
   });
 
   beforeEach(() => {

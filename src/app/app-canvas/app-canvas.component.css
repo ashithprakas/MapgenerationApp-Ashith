@@ -1,34 +1,30 @@
-.canvasPanel{
+.canvasPanel {
   position: relative;
   height: 100%;
   width: 100%;
 }
 
-#canvasArea{
+#canvasArea {
   position: absolute;
-  background-color: aquamarine;
   height: 100%;
   width: 100%;
-
 }
 
-.buttonGroup{
+.buttonGroup {
   margin: 0;
   position: absolute;
   left: 50%;
   top: 90%;
   -ms-transform: translateX(-50%);
   transform: translateX(-50%);
-
 }
 
-.canvastoolButton{
+.canvastoolButton {
   background-color: white;
   padding: 10px;
   padding-left: 20px;
-  padding-right: 20px ;
+  padding-right: 20px;
 }
-.canvastoolButton:hover{
+.canvastoolButton:hover {
   cursor: pointer;
 }
-

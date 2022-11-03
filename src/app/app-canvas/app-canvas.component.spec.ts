@@ -8,9 +8,8 @@ describe('AppCanvasComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ AppCanvasComponent ]
-    })
-    .compileComponents();
+      declarations: [AppCanvasComponent],
+    }).compileComponents();
   });
 
   beforeEach(() => {
