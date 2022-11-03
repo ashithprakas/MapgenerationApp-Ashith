@@ -1,6 +1,7 @@
 import { Component, OnInit} from '@angular/core';
 import { fabric } from 'fabric';
 import { CanvasServiceService } from '../services/canvas-service.service';
+import { EventServiceService } from '../services/event-service.service';
 
 @Component({
   selector: 'app-app-canvas',
@@ -9,7 +10,7 @@ import { CanvasServiceService } from '../services/canvas-service.service';
 })
 export class AppCanvasComponent implements OnInit{
 
-  constructor(private CanvasServiceHandler:CanvasServiceService) { }
+  constructor(private CanvasServiceHandler:CanvasServiceService,private EventServiceHandler:EventServiceService) { }
   private canvas:any;
   canvasInitialize(){
     this.canvas = new fabric.Canvas('canvasArea')
@@ -21,10 +22,19 @@ export class AppCanvasComponent implements OnInit{
 
   AddShapeToCanvas(ObjectToBeRendered:fabric.Object){
     this.canvas.add(ObjectToBeRendered);
+    this.EventServiceHandler.addObjectEventMessage("Object Has Been Created Successfully!")
   }
 
   ngOnInit(): void {
     this.canvasInitialize();
-    this.CanvasServiceHandler.invokeAddShapeToCanvasFuntion$.subscribe((ObjectFromService)=>this.AddShapeToCanvas(ObjectFromService))
+    this.CanvasServiceHandler.invokeAddShapeToCanvasFuntion$.subscribe((ObjectFromService)=>this.AddShapeToCanvas(ObjectFromService));
+
+    this.canvas.on('object:rotating',()=>{this.EventServiceHandler.addObjectEventMessage("Object Is Being Rotated")});
+    this.canvas.on('object:scaling',()=>{this.EventServiceHandler.addObjectEventMessage("Object Is Being Scaled")});
+    this.canvas.on('object:moving',()=>{this.EventServiceHandler.addObjectEventMessage("Object Is Being Dragged")});
+    this.canvas.on('object:skewing',()=>{this.EventServiceHandler.addObjectEventMessage("Object Is Being Skewd")});
+    this.canvas.on('selection:created',()=>{this.EventServiceHandler.addObjectEventMessage("Object Has Been Selected")});
+    this.canvas.on('selection:updated',()=>{this.EventServiceHandler.addObjectEventMessage("Object Has Been Selected")});
+    this.canvas.on('selection:cleared',()=>{this.EventServiceHandler.addObjectEventMessage("No Object Is Selected")});
   }
 }
