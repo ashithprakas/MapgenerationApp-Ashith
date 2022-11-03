@@ -1,13 +1,12 @@
-import { Injectable,EventEmitter } from '@angular/core';
-import { Subscription } from 'rxjs';
+import { Injectable} from '@angular/core';
+import { Subject} from 'rxjs';
 import { fabric } from 'fabric';
 
 
 @Injectable()
 export class CanvasServiceService {
 
-  invokeAddShapeTOCanvasFunction = new EventEmitter();
-  subsVar?: Subscription;
+  invokeAddShapeTOCanvasFunction =  new Subject()
 
   onObjectPanelButtonClick(ShapeName:string){
     let ObjectToBeRendered
@@ -20,7 +19,7 @@ export class CanvasServiceService {
     else if(ShapeName == "triangle"){
       ObjectToBeRendered = this.initializeTriangle();
     }
-    this.invokeAddShapeTOCanvasFunction.emit(ObjectToBeRendered);
+    this.invokeAddShapeTOCanvasFunction.next(ObjectToBeRendered)
   }
 
   
