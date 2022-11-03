@@ -19,7 +19,7 @@ export class AppCanvasComponent implements OnInit{
     console.log("Canvas Initialized");
   }
 
-  AddShapeToCanvas(ObjectToBeRendered:any){
+  AddShapeToCanvas(ObjectToBeRendered:fabric.Circle|fabric.Rect|fabric.Triangle){
     this.canvas.add(ObjectToBeRendered);
   }
 

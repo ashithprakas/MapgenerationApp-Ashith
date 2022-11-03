@@ -1,25 +1,25 @@
 import { Injectable} from '@angular/core';
-import { Subject} from 'rxjs';
+import {Subject} from 'rxjs';
 import { fabric } from 'fabric';
 
 
 @Injectable()
 export class CanvasServiceService {
 
-  invokeAddShapeTOCanvasFunction =  new Subject()
+  invokeAddShapeTOCanvasFunction:Subject<fabric.Circle|fabric.Rect|fabric.Triangle> =  new Subject();
 
   onObjectPanelButtonClick(ShapeName:string){
-    let ObjectToBeRendered
+    let ObjectToBeRendered:fabric.Circle|fabric.Rect|fabric.Triangle;
     if(ShapeName == "rectangle"){
-      ObjectToBeRendered = this.initializeRectangle()
+      ObjectToBeRendered = this.initializeRectangle();
     }
     else if(ShapeName == "circle"){
-      ObjectToBeRendered = this.initializeCircle()
+      ObjectToBeRendered = this.initializeCircle();
     }
-    else if(ShapeName == "triangle"){
-      ObjectToBeRendered = this.initializeTriangle();
+    else{
+      ObjectToBeRendered = this.initializeTriangle();   //initialize triangle model if it is neither rectangle nor circle
     }
-    this.invokeAddShapeTOCanvasFunction.next(ObjectToBeRendered)
+    this.invokeAddShapeTOCanvasFunction.next(ObjectToBeRendered);
   }
 
   
