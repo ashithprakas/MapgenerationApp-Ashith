@@ -10,7 +10,18 @@ export class EventServiceService {
   invokeEventInspectorOutput: Subject<string> = new Subject();
   invokeEventInspectorOutput$ = this.invokeEventInspectorOutput.asObservable();
 
-  addObjectEventMessage(text: string) {
-    this.invokeEventInspectorOutput.next(text);
+  addObjectEventMessage(EventText: string, ObjectType?: string) {
+    let ObjectName: string = '';
+    if (ObjectType == 'rect') {
+      ObjectName = 'Rectangle ';
+    } else if (ObjectType == 'triangle') {
+      ObjectName = 'Triangle ';
+    } else if (ObjectType == 'circle') {
+      ObjectName = 'Circle ';
+    } else if (ObjectType == 'activeSelection') {
+      ObjectName = 'Group Of ';
+    }
+
+    this.invokeEventInspectorOutput.next(ObjectName + EventText);
   }
 }
