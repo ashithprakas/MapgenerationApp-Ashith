@@ -4,6 +4,7 @@ import { fabric } from 'fabric';
 
 @Injectable()
 export class CanvasServiceService {
+  ObjectName: string = '';
   invokeAddShapeTOCanvasFunction: Subject<fabric.Object> = new Subject();
   invokeAddShapeToCanvasFuntion$ =
     this.invokeAddShapeTOCanvasFunction.asObservable();
@@ -30,6 +31,7 @@ export class CanvasServiceService {
       width: 200,
       height: 100,
     });
+    this.ObjectName = 'Rectangle ';
     return rect;
   }
 
@@ -42,6 +44,7 @@ export class CanvasServiceService {
       radius: 100,
       fill: 'grey',
     });
+    this.ObjectName = 'Circle ';
     return circle;
   }
 
@@ -54,6 +57,7 @@ export class CanvasServiceService {
       strokeWidth: 5,
       height: 100,
     });
+    this.ObjectName = 'Triangle ';
     return triangle;
   }
 }

@@ -24,8 +24,9 @@ export class AppCanvasComponent implements OnInit {
 
   AddShapeToCanvas(ObjectToBeRendered: fabric.Object) {
     this.canvas.add(ObjectToBeRendered);
+    let ObjectName = this.CanvasServiceHandler.ObjectName;
     this.EventServiceHandler.addObjectEventMessage(
-      'Object Has Been Created Successfully!'
+      ObjectName + ' Object Has Been Created Successfully!'
     );
   }
 
