@@ -24,10 +24,6 @@ export class AppCanvasComponent implements OnInit {
 
   AddShapeToCanvas(ObjectToBeRendered: fabric.Object) {
     this.canvas.add(ObjectToBeRendered);
-    let ObjectName = this.CanvasServiceHandler.ObjectName;
-    this.EventServiceHandler.addObjectEventMessage(
-      ObjectName + ' Object Has Been Created Successfully!'
-    );
   }
 
   GetObjectType() {
@@ -41,6 +37,12 @@ export class AppCanvasComponent implements OnInit {
       (ObjectFromService) => this.AddShapeToCanvas(ObjectFromService)
     );
 
+    this.canvas.on('object:added', () => {
+      let ObjectName = this.CanvasServiceHandler.ObjectName;
+      this.EventServiceHandler.addObjectEventMessage(
+        ObjectName + ' Object Has Been Created Successfully!'
+      );
+    });
     this.canvas.on('object:rotating', () => {
       this.EventServiceHandler.addObjectEventMessage(
         'Object Is Being Rotated',
@@ -61,7 +63,7 @@ export class AppCanvasComponent implements OnInit {
     });
     this.canvas.on('object:skewing', () => {
       this.EventServiceHandler.addObjectEventMessage(
-        'Object Is Being Skewd',
+        'Object Is Being Skewed',
         this.GetObjectType()
       );
     });
