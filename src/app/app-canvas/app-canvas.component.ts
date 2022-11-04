@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { fabric } from 'fabric';
 import { CanvasServiceService } from '../services/canvas-service.service';
-import { EventServiceService } from '../services/event-service.service';
+import { EventInspectorService } from '../services/eventInspector.service';
 
 @Component({
   selector: 'app-app-canvas',
@@ -11,7 +11,7 @@ import { EventServiceService } from '../services/event-service.service';
 export class AppCanvasComponent implements OnInit {
   constructor(
     private CanvasServiceHandler: CanvasServiceService,
-    private EventServiceHandler: EventServiceService
+    private EventServiceHandler: EventInspectorService
   ) {}
   private canvas: any;
   canvasInitialize() {

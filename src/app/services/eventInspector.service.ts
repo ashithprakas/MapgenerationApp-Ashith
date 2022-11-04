@@ -4,7 +4,7 @@ import { Subject } from 'rxjs';
 @Injectable({
   providedIn: 'root',
 })
-export class EventServiceService {
+export class EventInspectorService {
   constructor() {}
 
   invokeEventInspectorOutput: Subject<string> = new Subject();

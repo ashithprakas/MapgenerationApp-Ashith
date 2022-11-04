@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { EventServiceService } from '../services/event-service.service';
+import { EventInspectorService } from '../services/eventInspector.service';
 
 @Component({
   selector: 'app-event-inspector-panel',
@@ -8,7 +8,7 @@ import { EventServiceService } from '../services/event-service.service';
 })
 export class EventInspectorPanelComponent implements OnInit {
   eventtext?: string;
-  constructor(private eventServiceHandler: EventServiceService) {}
+  constructor(private eventServiceHandler: EventInspectorService) {}
 
   ngOnInit(): void {
     this.eventServiceHandler.invokeEventInspectorOutput$.subscribe(
