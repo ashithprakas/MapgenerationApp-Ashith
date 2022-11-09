@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { fabric } from 'fabric';
 import { CanvasServiceService } from '../services/canvas-service.service';
 import { EventInspectorService } from '../services/eventInspector.service';
-
+import { updateCanvas } from '../store/canvas.actions';
+import { Store } from '@ngrx/store';
 @Component({
   selector: 'app-app-canvas',
   templateUrl: './app-canvas.component.html',
@@ -11,7 +12,8 @@ import { EventInspectorService } from '../services/eventInspector.service';
 export class AppCanvasComponent implements OnInit {
   constructor(
     private CanvasServiceHandler: CanvasServiceService,
-    private EventServiceHandler: EventInspectorService
+    private EventServiceHandler: EventInspectorService,
+    private store: Store
   ) {}
   private canvas: any;
   canvasInitialize() {
@@ -22,8 +24,14 @@ export class AppCanvasComponent implements OnInit {
     console.log('Canvas Initialized');
   }
 
+  updateCanvasState() {
+    this.store.dispatch(
+      updateCanvas({ canvasState: JSON.stringify(this.canvas) })
+    );
+  }
   AddShapeToCanvas(ObjectToBeRendered: fabric.Object) {
     this.canvas.add(ObjectToBeRendered);
+    this.updateCanvasState();
   }
 
   GetObjectType() {
