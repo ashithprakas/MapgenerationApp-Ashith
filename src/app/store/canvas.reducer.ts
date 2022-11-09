@@ -6,5 +6,5 @@ export const initialState = JSON.stringify(new fabric.Canvas('canvasArea'));
 
 export const canvasReducer = createReducer(
   initialState,
-  on(updateCanvas, (state) => (state = state))
+  on(updateCanvas, (state, { canvasState }) => canvasState)
 );
