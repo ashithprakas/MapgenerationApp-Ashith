@@ -1,10 +1,14 @@
 import { createReducer, on } from '@ngrx/store';
 import { updateCanvas } from './canvas.actions';
 import { fabric } from 'fabric';
+import { CanvasModel } from '../model/canvas-model';
 
-export const initialState = JSON.stringify(new fabric.Canvas('canvasArea'));
+const initialState: CanvasModel = {
+  canvasState: JSON.stringify(fabric.Canvas),
+  canvasActionType: 'initialize',
+};
 
 export const canvasReducer = createReducer(
   initialState,
-  on(updateCanvas, (state, { canvasState }) => canvasState)
+  on(updateCanvas, (Currentstate, CanvasState) => (Currentstate = CanvasState))
 );

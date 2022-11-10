@@ -24,14 +24,16 @@ export class AppCanvasComponent implements OnInit {
     console.log('Canvas Initialized');
   }
 
-  updateCanvasState() {
+  updateCanvasState(EventName: string) {
     this.store.dispatch(
-      updateCanvas({ canvasState: JSON.stringify(this.canvas) })
+      updateCanvas({
+        canvasState: JSON.stringify(this.canvas),
+        canvasActionType: EventName,
+      })
     );
   }
   AddShapeToCanvas(ObjectToBeRendered: fabric.Object) {
     this.canvas.add(ObjectToBeRendered);
-    this.updateCanvasState();
   }
 
   GetObjectType() {
@@ -50,30 +52,35 @@ export class AppCanvasComponent implements OnInit {
       this.EventServiceHandler.addObjectEventMessage(
         ObjectName + ' Object Has Been Created Successfully!'
       );
+      this.updateCanvasState('Object  Added');
     });
     this.canvas.on('object:rotating', () => {
       this.EventServiceHandler.addObjectEventMessage(
         'Object Is Being Rotated',
         this.GetObjectType()
       );
+      this.updateCanvasState('Object  Rotated');
     });
     this.canvas.on('object:scaling', () => {
       this.EventServiceHandler.addObjectEventMessage(
         'Object Is Being Scaled',
         this.GetObjectType()
       );
+      this.updateCanvasState('Object  Scaled');
     });
     this.canvas.on('object:moving', () => {
       this.EventServiceHandler.addObjectEventMessage(
         'Object Is Being Dragged',
         this.GetObjectType()
       );
+      this.updateCanvasState('Object Moved');
     });
     this.canvas.on('object:skewing', () => {
       this.EventServiceHandler.addObjectEventMessage(
         'Object Is Being Skewed',
         this.GetObjectType()
       );
+      this.updateCanvasState('Object  Skewed');
     });
 
     this.canvas.on('selection:created', () => {
