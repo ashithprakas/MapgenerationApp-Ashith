@@ -16,7 +16,6 @@ export class AppCanvasComponent implements OnInit {
     private store: Store
   ) {}
   private canvas: any;
-  private lastCanvasAction: string = '';
   canvasInitialize() {
     this.canvas = new fabric.Canvas('canvasArea');
     this.canvas.setWidth(document.body.scrollWidth);
@@ -53,36 +52,31 @@ export class AppCanvasComponent implements OnInit {
       this.EventServiceHandler.addObjectEventMessage(
         ObjectName + ' Object Has Been Created Successfully!'
       );
-      this.lastCanvasAction = 'Object  Added';
-      this.updateCanvasState(this.lastCanvasAction);
+      this.updateCanvasState('Add Event');
     });
     this.canvas.on('object:rotating', () => {
       this.EventServiceHandler.addObjectEventMessage(
         'Object Is Being Rotated',
         this.GetObjectType()
       );
-      this.lastCanvasAction = 'Object  Rotated';
     });
     this.canvas.on('object:scaling', () => {
       this.EventServiceHandler.addObjectEventMessage(
         'Object Is Being Scaled',
         this.GetObjectType()
       );
-      this.lastCanvasAction = 'Object Scaled';
     });
     this.canvas.on('object:moving', () => {
       this.EventServiceHandler.addObjectEventMessage(
         'Object Is Being Dragged',
         this.GetObjectType()
       );
-      this.lastCanvasAction = 'Object Moved';
     });
     this.canvas.on('object:skewing', () => {
       this.EventServiceHandler.addObjectEventMessage(
         'Object Is Being Skewed',
         this.GetObjectType()
       );
-      this.lastCanvasAction = 'Object Skewed';
     });
 
     this.canvas.on('selection:created', () => {
@@ -100,8 +94,8 @@ export class AppCanvasComponent implements OnInit {
     this.canvas.on('selection:cleared', () => {
       this.EventServiceHandler.addObjectEventMessage('No Object Is Selected');
     });
-    this.canvas.on('object:modified', () => {
-      this.updateCanvasState(this.lastCanvasAction);
+    this.canvas.on('object:modified', (e: any) => {
+      this.updateCanvasState(e.action + ' event');
     });
   }
 }
