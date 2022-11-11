@@ -10,7 +10,7 @@
       min="1"
       max="10"
       #StrokeWidth
-      [value]="strokeWidth"
+      [value]="PropertyPanelValues.StrokeWidth"
       (change)="onStrokeWidthChange(StrokeWidth.value)"
       class="slider"
     />
@@ -22,7 +22,7 @@
       type="color"
       class="StrokeColorInputStyle"
       #StrokeColorInputValue
-      [value]="strokecolor"
+      [value]="PropertyPanelValues.StrokeColor"
       (change)="onStrokeColorChange(StrokeColorInputValue.value)"
     />
   </div>
@@ -33,7 +33,7 @@
       type="color"
       class="FillColorInputStyle"
       #FillColorValue
-      [value]="fillcolor"
+      [value]="PropertyPanelValues.FillColor"
       (change)="onFillColorChange(FillColorValue.value)"
     />
   </div>
@@ -43,7 +43,7 @@
     <input
       type="text"
       #AngleValue
-      [value]="objectAngle"
+      [value]="this.PropertyPanelValues.ObjectAngle"
       (change)="onAngleChange(AngleValue.value)"
       class="AngleInputStyle"
     />

@@ -2,8 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { fabric } from 'fabric';
 import { CanvasServiceService } from '../services/canvas-service.service';
 import { EventInspectorService } from '../services/eventInspector.service';
+import { PropertiesPanelService } from '../services/properties-panel.service';
 import { updateCanvas } from '../store/canvas.actions';
 import { Store } from '@ngrx/store';
+import { SetPropertiesModel } from '../model/canvas-model';
 @Component({
   selector: 'app-app-canvas',
   templateUrl: './app-canvas.component.html',
@@ -13,6 +15,7 @@ export class AppCanvasComponent implements OnInit {
   constructor(
     private CanvasServiceHandler: CanvasServiceService,
     private EventServiceHandler: EventInspectorService,
+    private PropertyPanelHandler: PropertiesPanelService,
     private store: Store
   ) {}
   private canvas: any;
@@ -41,9 +44,15 @@ export class AppCanvasComponent implements OnInit {
     return ObjectType;
   }
 
-  getSelectedObjectProperties() {
-    let strokeWidth: string = this.canvas.getActiveObject().get('strokeWidth');
-    let strokeColor: string = this.canvas.getActiveObject().get('stroke');
+  getSelectedObjectsProperties() {
+    let objecttype = this.GetObjectType();
+    let Propeties: SetPropertiesModel = {
+      StrokeWidth: this.canvas.getActiveObject().get('strokeWidth'),
+      StrokeColor: this.canvas.getActiveObject().get('stroke'),
+      FillColor: this.canvas.getActiveObject().get('fill'),
+      ObjectAngle: this.canvas.getActiveObject().get('angle'),
+    };
+    this.PropertyPanelHandler.OnObjectSelected(Propeties);
   }
   ngOnInit(): void {
     this.canvasInitialize();
@@ -88,12 +97,14 @@ export class AppCanvasComponent implements OnInit {
         'Object Has Been Selected',
         this.GetObjectType()
       );
+      this.getSelectedObjectsProperties();
     });
     this.canvas.on('selection:updated', () => {
       this.EventServiceHandler.addObjectEventMessage(
         'Object Has Been Selected',
         this.GetObjectType()
       );
+      this.getSelectedObjectsProperties();
     });
     this.canvas.on('selection:cleared', () => {
       this.EventServiceHandler.addObjectEventMessage('No Object Is Selected');
