@@ -20,7 +20,7 @@ export class AppCanvasComponent implements OnInit {
     this.canvas = new fabric.Canvas('canvasArea');
     this.canvas.setWidth(document.body.scrollWidth);
     this.canvas.setHeight(document.body.scrollHeight);
-    this.canvas.set('backgroundColor', 'grey');
+    this.canvas.set('backgroundColor', '#808080');
     console.log('Canvas Initialized');
   }
 
@@ -41,6 +41,10 @@ export class AppCanvasComponent implements OnInit {
     return ObjectType;
   }
 
+  getSelectedObjectProperties() {
+    let strokeWidth: string = this.canvas.getActiveObject().get('strokeWidth');
+    let strokeColor: string = this.canvas.getActiveObject().get('stroke');
+  }
   ngOnInit(): void {
     this.canvasInitialize();
     this.CanvasServiceHandler.invokeAddShapeToCanvasFuntion$.subscribe(

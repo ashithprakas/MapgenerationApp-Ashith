@@ -25,9 +25,9 @@ export class CanvasServiceService {
     let rect = new fabric.Rect({
       left: 100,
       top: 100,
-      stroke: 'black',
+      stroke: '#000000',
       strokeWidth: 5,
-      fill: 'grey',
+      fill: '#808080',
       width: 200,
       height: 100,
     });
@@ -39,10 +39,10 @@ export class CanvasServiceService {
     let circle = new fabric.Circle({
       left: 100,
       top: 100,
-      stroke: 'black',
+      stroke: '#000000',
       strokeWidth: 5,
       radius: 100,
-      fill: 'grey',
+      fill: '#808080',
     });
     this.ObjectName = 'Circle ';
     return circle;
@@ -52,8 +52,8 @@ export class CanvasServiceService {
     let triangle = new fabric.Triangle({
       left: 100,
       top: 100,
-      stroke: 'black',
-      fill: 'grey',
+      stroke: '#000000',
+      fill: '#808080',
       strokeWidth: 5,
       height: 100,
     });
