@@ -52,12 +52,24 @@ export class AppCanvasComponent implements OnInit {
       FillColor: this.canvas.getActiveObject().get('fill'),
       ObjectAngle: this.canvas.getActiveObject().get('angle'),
     };
+
     this.PropertyPanelHandler.OnObjectSelected(Propeties);
+  }
+  setSelectedObjectPropertyValuesFromPanel(Properties: SetPropertiesModel) {
+    console.log(Properties);
+    this.canvas.getActiveObject().set('strokeWidth', Properties.StrokeWidth);
+    this.canvas.getActiveObject().set('fill', Properties.FillColor);
+    this.canvas.getActiveObject().set('stroke', Properties.StrokeColor);
+    this.canvas.getActiveObject().set('angle', Properties.ObjectAngle);
+    this.canvas.renderAll();
   }
   ngOnInit(): void {
     this.canvasInitialize();
     this.CanvasServiceHandler.invokeAddShapeToCanvasFuntion$.subscribe(
       (ObjectFromService) => this.AddShapeToCanvas(ObjectFromService)
+    );
+    this.PropertyPanelHandler.invokeSetObjectPropertyFromPanel$.subscribe(
+      (Properties) => this.setSelectedObjectPropertyValuesFromPanel(Properties)
     );
 
     this.canvas.on('object:added', () => {
@@ -90,6 +102,7 @@ export class AppCanvasComponent implements OnInit {
         'Object Is Being Skewed',
         this.GetObjectType()
       );
+      this.canvas.getActiveObject();
     });
 
     this.canvas.on('selection:created', () => {

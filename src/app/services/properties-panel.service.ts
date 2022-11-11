@@ -12,7 +12,16 @@ export class PropertiesPanelService {
   invokeSetObjectPanelProperty$ =
     this.invokeSetObjectPanelProperty.asObservable();
 
+  invokeSetObjectPropertyFromPanel: Subject<SetPropertiesModel> = new Subject();
+  invokeSetObjectPropertyFromPanel$ =
+    this.invokeSetObjectPropertyFromPanel.asObservable();
+
   OnObjectSelected(Properties: SetPropertiesModel) {
     this.invokeSetObjectPanelProperty.next(Properties);
+  }
+
+  onPropertyPanelChange(Properties: SetPropertiesModel) {
+    this.invokeSetObjectPropertyFromPanel.next(Properties);
+    console.log('Property Panel Changed');
   }
 }

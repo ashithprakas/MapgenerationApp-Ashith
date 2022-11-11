@@ -4,7 +4,7 @@ export interface CanvasModel {
 }
 
 export interface SetPropertiesModel {
-  StrokeWidth: string;
+  StrokeWidth: number;
   StrokeColor: string;
   FillColor: string;
   ObjectAngle: string;

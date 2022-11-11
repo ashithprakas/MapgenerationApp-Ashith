@@ -15,7 +15,7 @@ export class PropertiesPanelComponent implements OnInit {
   }
 
   PropertyPanelValues: SetPropertiesModel = {
-    StrokeWidth: '5',
+    StrokeWidth: 5,
     StrokeColor: '#9a3c3c',
     FillColor: '#9a3c3c',
     ObjectAngle: '0',
@@ -23,24 +23,33 @@ export class PropertiesPanelComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  showCurrentProperties() {
-    console.log(this.PropertyPanelValues);
-  }
   onStrokeColorChange(value: string) {
     this.PropertyPanelValues.StrokeColor = value;
-    this.showCurrentProperties();
+
+    this.propertyPanelServiceHandler.onPropertyPanelChange(
+      this.PropertyPanelValues
+    );
   }
   onStrokeWidthChange(value: string) {
-    this.PropertyPanelValues.StrokeWidth = value;
-    this.showCurrentProperties();
+    this.PropertyPanelValues.StrokeWidth = Number(value);
+
+    this.propertyPanelServiceHandler.onPropertyPanelChange(
+      this.PropertyPanelValues
+    );
   }
   onFillColorChange(value: string) {
     this.PropertyPanelValues.FillColor = value;
-    this.showCurrentProperties();
+
+    this.propertyPanelServiceHandler.onPropertyPanelChange(
+      this.PropertyPanelValues
+    );
   }
   onAngleChange(value: string) {
     this.PropertyPanelValues.ObjectAngle = value;
-    this.showCurrentProperties();
+
+    this.propertyPanelServiceHandler.onPropertyPanelChange(
+      this.PropertyPanelValues
+    );
   }
 
   setPropertyPanelForSelectedObjects(ObjectProperties: SetPropertiesModel) {
@@ -48,6 +57,5 @@ export class PropertiesPanelComponent implements OnInit {
     this.PropertyPanelValues.StrokeColor = ObjectProperties.StrokeColor;
     this.PropertyPanelValues.FillColor = ObjectProperties.FillColor;
     this.PropertyPanelValues.ObjectAngle = ObjectProperties.ObjectAngle;
-    console.log(this.PropertyPanelValues);
   }
 }
