@@ -2,7 +2,7 @@
 <hr />
 <br /><br />
 
-<form class="propertiesInputPanel">
+<form class="propertiesInputPanel" name="PropertyPanelForm">
   <div class="strokeWidthGroup">
     <label> Stroke Width</label>
     <input
@@ -44,7 +44,10 @@
   <div class="angleInputGroup">
     <label>Angle</label>
     <input
-      type="text"
+      type="number"
+      min="0"
+      max="360"
+      name="angleInput"
       #AngleValue
       [disabled]="isdisabled"
       [value]="this.PropertyPanelValues.ObjectAngle"
@@ -54,6 +57,12 @@
   </div>
 </form>
 <br /><br />
-<div *ngIf="this.isdisabled" style="color: red; font-size: small">
-  <div>*Property Panel Cannot Be Used!</div>
+<div *ngIf="this.isdisabled">
+  <div style="color: red; font-size: small">
+    *Property Panel Cannot Be Used!
+  </div>
+  <div style="color: red; font-size: smaller">
+    &nbsp;&nbsp; Please Select A Single Object
+  </div>
 </div>
+<div></div>

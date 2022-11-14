@@ -7,5 +7,5 @@ export interface SetPropertiesModel {
   StrokeWidth: number;
   StrokeColor: string;
   FillColor: string;
-  ObjectAngle: string;
+  ObjectAngle: number;
 }

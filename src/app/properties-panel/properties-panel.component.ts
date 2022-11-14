@@ -22,7 +22,7 @@ export class PropertiesPanelComponent implements OnInit {
     StrokeWidth: 5,
     StrokeColor: '#9a3c3c',
     FillColor: '#9a3c3c',
-    ObjectAngle: '0',
+    ObjectAngle: 0,
   };
 
   ngOnInit(): void {}
@@ -49,7 +49,7 @@ export class PropertiesPanelComponent implements OnInit {
     );
   }
   onAngleChange(value: string) {
-    this.PropertyPanelValues.ObjectAngle = value;
+    this.PropertyPanelValues.ObjectAngle = Number(value);
 
     this.propertyPanelServiceHandler.onPropertyPanelChange(
       this.PropertyPanelValues
@@ -64,6 +64,8 @@ export class PropertiesPanelComponent implements OnInit {
     this.PropertyPanelValues.StrokeWidth = ObjectProperties.StrokeWidth;
     this.PropertyPanelValues.StrokeColor = ObjectProperties.StrokeColor;
     this.PropertyPanelValues.FillColor = ObjectProperties.FillColor;
-    this.PropertyPanelValues.ObjectAngle = ObjectProperties.ObjectAngle;
+    this.PropertyPanelValues.ObjectAngle = Math.trunc(
+      ObjectProperties.ObjectAngle
+    );
   }
 }
