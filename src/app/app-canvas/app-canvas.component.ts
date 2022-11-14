@@ -67,6 +67,7 @@ export class AppCanvasComponent implements OnInit {
     this.canvas.getActiveObject().set('stroke', Properties.StrokeColor);
     this.canvas.getActiveObject().set('angle', Properties.ObjectAngle);
     this.canvas.renderAll();
+    this.updateCanvasState('Property Change');
   }
   ngOnInit(): void {
     this.canvasInitialize();
