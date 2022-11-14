@@ -10,6 +10,7 @@
       min="1"
       max="10"
       #StrokeWidth
+      [disabled]="isdisabled"
       [value]="PropertyPanelValues.StrokeWidth"
       (change)="onStrokeWidthChange(StrokeWidth.value)"
       class="slider"
@@ -19,6 +20,7 @@
   <div class="strokeColorGroup">
     <label>Stroke</label>
     <input
+      [disabled]="isdisabled"
       type="color"
       class="StrokeColorInputStyle"
       #StrokeColorInputValue
@@ -33,6 +35,7 @@
       type="color"
       class="FillColorInputStyle"
       #FillColorValue
+      [disabled]="isdisabled"
       [value]="PropertyPanelValues.FillColor"
       (change)="onFillColorChange(FillColorValue.value)"
     />
@@ -43,9 +46,14 @@
     <input
       type="text"
       #AngleValue
+      [disabled]="isdisabled"
       [value]="this.PropertyPanelValues.ObjectAngle"
       (change)="onAngleChange(AngleValue.value)"
       class="AngleInputStyle"
     />
   </div>
 </form>
+<br /><br />
+<div *ngIf="this.isdisabled" style="color: red; font-size: small">
+  <div>*Property Panel Cannot Be Used!</div>
+</div>

@@ -46,14 +46,19 @@ export class AppCanvasComponent implements OnInit {
 
   getSelectedObjectsProperties() {
     let objecttype = this.GetObjectType();
-    let Propeties: SetPropertiesModel = {
-      StrokeWidth: this.canvas.getActiveObject().get('strokeWidth'),
-      StrokeColor: this.canvas.getActiveObject().get('stroke'),
-      FillColor: this.canvas.getActiveObject().get('fill'),
-      ObjectAngle: this.canvas.getActiveObject().get('angle'),
-    };
+    console.log(this.canvas.getActiveObject().get('type'));
 
-    this.PropertyPanelHandler.OnObjectSelected(Propeties);
+    if (objecttype == 'activeSelection') {
+      this.PropertyPanelHandler.DisablePropertyPanel();
+    } else {
+      let Propeties: SetPropertiesModel = {
+        StrokeWidth: this.canvas.getActiveObject().get('strokeWidth'),
+        StrokeColor: this.canvas.getActiveObject().get('stroke'),
+        FillColor: this.canvas.getActiveObject().get('fill'),
+        ObjectAngle: this.canvas.getActiveObject().get('angle'),
+      };
+      this.PropertyPanelHandler.OnObjectSelected(Propeties);
+    }
   }
   setSelectedObjectPropertyValuesFromPanel(Properties: SetPropertiesModel) {
     console.log(Properties);
@@ -84,6 +89,7 @@ export class AppCanvasComponent implements OnInit {
         'Object Is Being Rotated',
         this.GetObjectType()
       );
+      this.getSelectedObjectsProperties();
     });
     this.canvas.on('object:scaling', () => {
       this.EventServiceHandler.addObjectEventMessage(
@@ -121,6 +127,7 @@ export class AppCanvasComponent implements OnInit {
     });
     this.canvas.on('selection:cleared', () => {
       this.EventServiceHandler.addObjectEventMessage('No Object Is Selected');
+      this.PropertyPanelHandler.DisablePropertyPanel();
     });
     this.canvas.on('object:modified', (e: any) => {
       this.updateCanvasState(e.action + ' event');

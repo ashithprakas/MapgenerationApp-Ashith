@@ -8,9 +8,13 @@ import { SetPropertiesModel } from '../model/canvas-model';
   styleUrls: ['./properties-panel.component.css'],
 })
 export class PropertiesPanelComponent implements OnInit {
+  isdisabled: boolean = true;
   constructor(private propertyPanelServiceHandler: PropertiesPanelService) {
     this.propertyPanelServiceHandler.invokeSetObjectPanelProperty$.subscribe(
       (Properties) => this.setPropertyPanelForSelectedObjects(Properties)
+    );
+    this.propertyPanelServiceHandler.invokeDisablePropertyPanel$.subscribe(() =>
+      this.DisablePropertyPanel()
     );
   }
 
@@ -52,7 +56,11 @@ export class PropertiesPanelComponent implements OnInit {
     );
   }
 
+  DisablePropertyPanel() {
+    this.isdisabled = true;
+  }
   setPropertyPanelForSelectedObjects(ObjectProperties: SetPropertiesModel) {
+    this.isdisabled = false;
     this.PropertyPanelValues.StrokeWidth = ObjectProperties.StrokeWidth;
     this.PropertyPanelValues.StrokeColor = ObjectProperties.StrokeColor;
     this.PropertyPanelValues.FillColor = ObjectProperties.FillColor;

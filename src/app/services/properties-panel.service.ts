@@ -16,6 +16,13 @@ export class PropertiesPanelService {
   invokeSetObjectPropertyFromPanel$ =
     this.invokeSetObjectPropertyFromPanel.asObservable();
 
+  invokeDisablePropertyPanel = new Subject();
+  invokeDisablePropertyPanel$ = this.invokeDisablePropertyPanel.asObservable();
+
+  DisablePropertyPanel() {
+    this.invokeDisablePropertyPanel.next();
+  }
+
   OnObjectSelected(Properties: SetPropertiesModel) {
     this.invokeSetObjectPanelProperty.next(Properties);
   }
