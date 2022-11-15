@@ -5,7 +5,7 @@ import { EventInspectorService } from '../services/eventInspector.service';
 import { PropertiesPanelService } from '../services/properties-panel.service';
 import { updateCanvas } from '../store/canvas.actions';
 import { Store } from '@ngrx/store';
-import { SetPropertiesModel } from '../model/canvas-model';
+import { Property, SetPropertiesModel } from '../model/canvas-model';
 @Component({
   selector: 'app-app-canvas',
   templateUrl: './app-canvas.component.html',
@@ -60,12 +60,12 @@ export class AppCanvasComponent implements OnInit {
       this.PropertyPanelHandler.OnObjectSelected(Propeties);
     }
   }
-  setSelectedObjectPropertyValuesFromPanel(Properties: SetPropertiesModel) {
-    console.log(Properties);
-    this.canvas.getActiveObject().set('strokeWidth', Properties.StrokeWidth);
-    this.canvas.getActiveObject().set('fill', Properties.FillColor);
-    this.canvas.getActiveObject().set('stroke', Properties.StrokeColor);
-    this.canvas.getActiveObject().set('angle', Properties.ObjectAngle);
+  setSelectedObjectPropertyValuesFromPanel(ChangedPropertyData: Property) {
+    console.log(ChangedPropertyData);
+    this.canvas
+      .getActiveObject()
+      .set(ChangedPropertyData.propertyName, ChangedPropertyData.PropertyValue);
+
     this.canvas.renderAll();
     this.updateCanvasState('Property Change');
   }
@@ -75,7 +75,7 @@ export class AppCanvasComponent implements OnInit {
       (ObjectFromService) => this.AddShapeToCanvas(ObjectFromService)
     );
     this.PropertyPanelHandler.invokeSetObjectPropertyFromPanel$.subscribe(
-      (Properties) => this.setSelectedObjectPropertyValuesFromPanel(Properties)
+      (Property) => this.setSelectedObjectPropertyValuesFromPanel(Property)
     );
 
     this.canvas.on('object:added', () => {

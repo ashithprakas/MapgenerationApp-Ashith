@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
-import { SetPropertiesModel } from '../model/canvas-model';
+import { SetPropertiesModel, Property } from '../model/canvas-model';
 
 @Injectable({
   providedIn: 'root',
@@ -12,7 +12,7 @@ export class PropertiesPanelService {
   invokeSetObjectPanelProperty$ =
     this.invokeSetObjectPanelProperty.asObservable();
 
-  invokeSetObjectPropertyFromPanel: Subject<SetPropertiesModel> = new Subject();
+  invokeSetObjectPropertyFromPanel: Subject<Property> = new Subject();
   invokeSetObjectPropertyFromPanel$ =
     this.invokeSetObjectPropertyFromPanel.asObservable();
 
@@ -27,8 +27,8 @@ export class PropertiesPanelService {
     this.invokeSetObjectPanelProperty.next(Properties);
   }
 
-  onPropertyPanelChange(Properties: SetPropertiesModel) {
-    this.invokeSetObjectPropertyFromPanel.next(Properties);
+  onPropertyPanelChange(ChangedPropertyData: Property) {
+    this.invokeSetObjectPropertyFromPanel.next(ChangedPropertyData);
     console.log('Property Panel Changed');
   }
 }

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { PropertiesPanelService } from '../services/properties-panel.service';
-import { SetPropertiesModel } from '../model/canvas-model';
+import { SetPropertiesModel, Property } from '../model/canvas-model';
 
 @Component({
   selector: 'app-properties-panel',
@@ -25,34 +25,43 @@ export class PropertiesPanelComponent implements OnInit {
     ObjectAngle: 0,
   };
 
+  ChangedPropertyData: Property = {
+    propertyName: '',
+    PropertyValue: '',
+  };
+
   ngOnInit(): void {}
 
   onStrokeColorChange(value: string) {
     this.PropertyPanelValues.StrokeColor = value;
-
+    this.ChangedPropertyData.propertyName = 'stroke';
+    this.ChangedPropertyData.PropertyValue = value;
     this.propertyPanelServiceHandler.onPropertyPanelChange(
-      this.PropertyPanelValues
+      this.ChangedPropertyData
     );
   }
   onStrokeWidthChange(value: string) {
     this.PropertyPanelValues.StrokeWidth = Number(value);
-
+    this.ChangedPropertyData.propertyName = 'strokeWidth';
+    this.ChangedPropertyData.PropertyValue = Number(value);
     this.propertyPanelServiceHandler.onPropertyPanelChange(
-      this.PropertyPanelValues
+      this.ChangedPropertyData
     );
   }
   onFillColorChange(value: string) {
     this.PropertyPanelValues.FillColor = value;
-
+    this.ChangedPropertyData.propertyName = 'fill';
+    this.ChangedPropertyData.PropertyValue = value;
     this.propertyPanelServiceHandler.onPropertyPanelChange(
-      this.PropertyPanelValues
+      this.ChangedPropertyData
     );
   }
   onAngleChange(value: string) {
     this.PropertyPanelValues.ObjectAngle = Number(value);
-
+    this.ChangedPropertyData.propertyName = 'angle';
+    this.ChangedPropertyData.PropertyValue = Number(value);
     this.propertyPanelServiceHandler.onPropertyPanelChange(
-      this.PropertyPanelValues
+      this.ChangedPropertyData
     );
   }
 

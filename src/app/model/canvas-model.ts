@@ -9,3 +9,8 @@ export interface SetPropertiesModel {
   FillColor: string;
   ObjectAngle: number;
 }
+
+export interface Property {
+  propertyName: string;
+  PropertyValue: string | Number;
+}
