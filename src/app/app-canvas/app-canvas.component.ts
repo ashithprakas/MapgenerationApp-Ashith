@@ -2,8 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { fabric } from 'fabric';
 import { CanvasServiceService } from '../services/canvas-service.service';
 import { EventInspectorService } from '../services/eventInspector.service';
+import { PropertiesPanelService } from '../services/properties-panel.service';
 import { updateCanvas } from '../store/canvas.actions';
 import { Store } from '@ngrx/store';
+import { Property, SetPropertiesModel } from '../model/canvas-model';
 @Component({
   selector: 'app-app-canvas',
   templateUrl: './app-canvas.component.html',
@@ -13,6 +15,7 @@ export class AppCanvasComponent implements OnInit {
   constructor(
     private CanvasServiceHandler: CanvasServiceService,
     private EventServiceHandler: EventInspectorService,
+    private PropertyPanelHandler: PropertiesPanelService,
     private store: Store
   ) {}
   private canvas: any;
@@ -20,7 +23,7 @@ export class AppCanvasComponent implements OnInit {
     this.canvas = new fabric.Canvas('canvasArea');
     this.canvas.setWidth(document.body.scrollWidth);
     this.canvas.setHeight(document.body.scrollHeight);
-    this.canvas.set('backgroundColor', 'grey');
+    this.canvas.set('backgroundColor', '#808080');
     console.log('Canvas Initialized');
   }
 
@@ -41,10 +44,45 @@ export class AppCanvasComponent implements OnInit {
     return ObjectType;
   }
 
+  getSelectedObjectsProperties() {
+    let NoOfObject: string = this.canvas.getActiveObjects().length;
+    let Propeties: SetPropertiesModel = {
+      disablePropertyPanel: true,
+      StrokeWidth: '',
+      StrokeColor: '',
+      FillColor: '',
+      ObjectAngle: '',
+    };
+    if (NoOfObject != '1') {
+      this.PropertyPanelHandler.OnObjectSelected(Propeties);
+    } else {
+      Propeties = {
+        disablePropertyPanel: false,
+        StrokeWidth: this.canvas.getActiveObject().get('strokeWidth'),
+        StrokeColor: this.canvas.getActiveObject().get('stroke'),
+        FillColor: this.canvas.getActiveObject().get('fill'),
+        ObjectAngle: Math.trunc(
+          this.canvas.getActiveObject().get('angle')
+        ).toString(),
+      };
+      this.PropertyPanelHandler.OnObjectSelected(Propeties);
+    }
+  }
+  setSelectedObjectPropertyValuesFromPanel(ChangedPropertyData: Property) {
+    this.canvas
+      .getActiveObject()
+      .set(ChangedPropertyData.propertyName, ChangedPropertyData.PropertyValue);
+
+    this.canvas.renderAll();
+    this.updateCanvasState('Property Change');
+  }
   ngOnInit(): void {
     this.canvasInitialize();
     this.CanvasServiceHandler.invokeAddShapeToCanvasFuntion$.subscribe(
       (ObjectFromService) => this.AddShapeToCanvas(ObjectFromService)
+    );
+    this.PropertyPanelHandler.invokeSetObjectPropertyFromPanel$.subscribe(
+      (Property) => this.setSelectedObjectPropertyValuesFromPanel(Property)
     );
 
     this.canvas.on('object:added', () => {
@@ -59,6 +97,7 @@ export class AppCanvasComponent implements OnInit {
         'Object Is Being Rotated',
         this.GetObjectType()
       );
+      this.getSelectedObjectsProperties();
     });
     this.canvas.on('object:scaling', () => {
       this.EventServiceHandler.addObjectEventMessage(
@@ -77,6 +116,7 @@ export class AppCanvasComponent implements OnInit {
         'Object Is Being Skewed',
         this.GetObjectType()
       );
+      this.canvas.getActiveObject();
     });
 
     this.canvas.on('selection:created', () => {
@@ -84,15 +124,18 @@ export class AppCanvasComponent implements OnInit {
         'Object Has Been Selected',
         this.GetObjectType()
       );
+      this.getSelectedObjectsProperties();
     });
     this.canvas.on('selection:updated', () => {
       this.EventServiceHandler.addObjectEventMessage(
         'Object Has Been Selected',
         this.GetObjectType()
       );
+      this.getSelectedObjectsProperties();
     });
     this.canvas.on('selection:cleared', () => {
       this.EventServiceHandler.addObjectEventMessage('No Object Is Selected');
+      this.getSelectedObjectsProperties();
     });
     this.canvas.on('object:modified', (e: any) => {
       this.updateCanvasState(e.action + ' event');

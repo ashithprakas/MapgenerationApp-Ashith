@@ -2,34 +2,67 @@
 <hr />
 <br /><br />
 
-<form class="propertiesInputPanel">
-  <div class="strokeWidthGroup">
-    <label> Stroke Width</label>
-    <input
-      type="range"
-      min="1"
-      max="100"
-      value="50"
-      class="slider"
-      id="StrokeWidthValue"
-    />
-  </div>
+<div *ngIf="this.isdisabled; then InvalidMessage; else PropertyPanel"></div>
+<ng-template #PropertyPanel>
+  <form class="propertiesInputPanel" name="PropertyPanelForm">
+    <div class="strokeWidthGroup">
+      <label> Stroke Width</label>
+      <input
+        type="range"
+        min="1"
+        max="10"
+        name="StrokeWidthInput"
+        #StrokeWidth
+        [(ngModel)]="PropertyPanelValues.StrokeWidth"
+        (change)="onStrokeWidthChange(StrokeWidth.value)"
+        class="slider"
+      />
+    </div>
 
-  <div class="strokeColorGroup">
-    <label>Stroke</label>
-    <input
-      type="color"
-      class="StrokeColorInputStyle"
-      id="StrokeColorInputValue"
-    />
-  </div>
+    <div class="strokeColorGroup">
+      <label>Stroke</label>
+      <input
+        type="color"
+        class="StrokeColorInputStyle"
+        #StrokeColorInputValue
+        name="StrokeColorInput"
+        [(ngModel)]="PropertyPanelValues.StrokeColor"
+        (change)="onStrokeColorChange(StrokeColorInputValue.value)"
+      />
+    </div>
 
-  <div class="fillColorGroup">
-    <label>Fill</label>
-    <input type="color" class="FillColorInputStyle" id="FillColorInputValue" />
-  </div>
+    <div class="fillColorGroup">
+      <label>Fill</label>
+      <input
+        type="color"
+        class="FillColorInputStyle"
+        #FillColorValue
+        name="FillColorInput"
+        [(ngModel)]="PropertyPanelValues.FillColor"
+        (change)="onFillColorChange(FillColorValue.value)"
+      />
+    </div>
 
-  <div class="angleInputGroup">
-    <label>Angle</label><input type="text" value="90" class="AngleInputStyle" />
+    <div class="angleInputGroup">
+      <label>Angle</label>
+      <input
+        type="number"
+        min="0"
+        max="360"
+        name="angleInput"
+        #AngleValue
+        [(ngModel)]="PropertyPanelValues.ObjectAngle"
+        (change)="onAngleChange(AngleValue.value)"
+        class="AngleInputStyle"
+      />
+    </div>
+  </form>
+</ng-template>
+<ng-template #InvalidMessage>
+  <div style="color: red; font-size: small">
+    *Property Panel Cannot Be Used!
   </div>
-</form>
+  <div style="color: red; font-size: smaller">
+    &nbsp;&nbsp; Please Select A Single Object
+  </div>
+</ng-template>
