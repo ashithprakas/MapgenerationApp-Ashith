@@ -5,10 +5,10 @@ export interface CanvasModel {
 
 export interface SetPropertiesModel {
   disablePropertyPanel: boolean;
-  StrokeWidth: number;
+  StrokeWidth: string;
   StrokeColor: string;
   FillColor: string;
-  ObjectAngle: number;
+  ObjectAngle: string;
 }
 
 export interface Property {

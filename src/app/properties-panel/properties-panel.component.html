@@ -11,8 +11,9 @@
         type="range"
         min="1"
         max="10"
+        name="StrokeWidthInput"
         #StrokeWidth
-        [value]="PropertyPanelValues.StrokeWidth"
+        [(ngModel)]="PropertyPanelValues.StrokeWidth"
         (change)="onStrokeWidthChange(StrokeWidth.value)"
         class="slider"
       />
@@ -24,7 +25,8 @@
         type="color"
         class="StrokeColorInputStyle"
         #StrokeColorInputValue
-        [value]="PropertyPanelValues.StrokeColor"
+        name="StrokeColorInput"
+        [(ngModel)]="PropertyPanelValues.StrokeColor"
         (change)="onStrokeColorChange(StrokeColorInputValue.value)"
       />
     </div>
@@ -35,7 +37,8 @@
         type="color"
         class="FillColorInputStyle"
         #FillColorValue
-        [value]="PropertyPanelValues.FillColor"
+        name="FillColorInput"
+        [(ngModel)]="PropertyPanelValues.FillColor"
         (change)="onFillColorChange(FillColorValue.value)"
       />
     </div>
@@ -48,7 +51,7 @@
         max="360"
         name="angleInput"
         #AngleValue
-        [value]="this.PropertyPanelValues.ObjectAngle"
+        [(ngModel)]="PropertyPanelValues.ObjectAngle"
         (change)="onAngleChange(AngleValue.value)"
         class="AngleInputStyle"
       />

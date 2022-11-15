@@ -17,10 +17,10 @@ export class PropertiesPanelComponent implements OnInit {
 
   PropertyPanelValues: SetPropertiesModel = {
     disablePropertyPanel: true,
-    StrokeWidth: 5,
-    StrokeColor: '#9a3c3c',
-    FillColor: '#9a3c3c',
-    ObjectAngle: 0,
+    StrokeWidth: '',
+    StrokeColor: '',
+    FillColor: '',
+    ObjectAngle: '',
   };
 
   ChangedPropertyData: Property = {
@@ -31,7 +31,6 @@ export class PropertiesPanelComponent implements OnInit {
   ngOnInit(): void {}
 
   onStrokeColorChange(value: string) {
-    this.PropertyPanelValues.StrokeColor = value;
     this.ChangedPropertyData.propertyName = 'stroke';
     this.ChangedPropertyData.PropertyValue = value;
     this.propertyPanelServiceHandler.onPropertyPanelChange(
@@ -39,7 +38,6 @@ export class PropertiesPanelComponent implements OnInit {
     );
   }
   onStrokeWidthChange(value: string) {
-    this.PropertyPanelValues.StrokeWidth = Number(value);
     this.ChangedPropertyData.propertyName = 'strokeWidth';
     this.ChangedPropertyData.PropertyValue = Number(value);
     this.propertyPanelServiceHandler.onPropertyPanelChange(
@@ -47,7 +45,6 @@ export class PropertiesPanelComponent implements OnInit {
     );
   }
   onFillColorChange(value: string) {
-    this.PropertyPanelValues.FillColor = value;
     this.ChangedPropertyData.propertyName = 'fill';
     this.ChangedPropertyData.PropertyValue = value;
     this.propertyPanelServiceHandler.onPropertyPanelChange(
@@ -55,7 +52,6 @@ export class PropertiesPanelComponent implements OnInit {
     );
   }
   onAngleChange(value: string) {
-    this.PropertyPanelValues.ObjectAngle = Number(value);
     this.ChangedPropertyData.propertyName = 'angle';
     this.ChangedPropertyData.PropertyValue = Number(value);
     this.propertyPanelServiceHandler.onPropertyPanelChange(
@@ -70,9 +66,7 @@ export class PropertiesPanelComponent implements OnInit {
       this.PropertyPanelValues.StrokeWidth = ObjectProperties.StrokeWidth;
       this.PropertyPanelValues.StrokeColor = ObjectProperties.StrokeColor;
       this.PropertyPanelValues.FillColor = ObjectProperties.FillColor;
-      this.PropertyPanelValues.ObjectAngle = Math.trunc(
-        ObjectProperties.ObjectAngle
-      );
+      this.PropertyPanelValues.ObjectAngle = ObjectProperties.ObjectAngle;
     }
   }
 }
