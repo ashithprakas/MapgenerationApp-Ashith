@@ -44,14 +44,21 @@ export class AppCanvasComponent implements OnInit {
     return ObjectType;
   }
 
-  getSelectedObjectsProperties() {
-    let objecttype = this.GetObjectType();
-    console.log(this.canvas.getActiveObject().get('type'));
-
-    if (objecttype == 'activeSelection') {
-      this.PropertyPanelHandler.DisablePropertyPanel();
+  getSelectedObjectsProperties(
+    NoOfObject: string = this.canvas.getActiveObjects().length
+  ) {
+    let Propeties: SetPropertiesModel = {
+      disablePropertyPanel: true,
+      StrokeWidth: 0,
+      StrokeColor: '',
+      FillColor: '',
+      ObjectAngle: 0,
+    };
+    if (NoOfObject != '1') {
+      this.PropertyPanelHandler.OnObjectSelected(Propeties);
     } else {
-      let Propeties: SetPropertiesModel = {
+      Propeties = {
+        disablePropertyPanel: false,
         StrokeWidth: this.canvas.getActiveObject().get('strokeWidth'),
         StrokeColor: this.canvas.getActiveObject().get('stroke'),
         FillColor: this.canvas.getActiveObject().get('fill'),
@@ -61,7 +68,6 @@ export class AppCanvasComponent implements OnInit {
     }
   }
   setSelectedObjectPropertyValuesFromPanel(ChangedPropertyData: Property) {
-    console.log(ChangedPropertyData);
     this.canvas
       .getActiveObject()
       .set(ChangedPropertyData.propertyName, ChangedPropertyData.PropertyValue);
@@ -128,7 +134,7 @@ export class AppCanvasComponent implements OnInit {
     });
     this.canvas.on('selection:cleared', () => {
       this.EventServiceHandler.addObjectEventMessage('No Object Is Selected');
-      this.PropertyPanelHandler.DisablePropertyPanel();
+      this.getSelectedObjectsProperties('0');
     });
     this.canvas.on('object:modified', (e: any) => {
       this.updateCanvasState(e.action + ' event');

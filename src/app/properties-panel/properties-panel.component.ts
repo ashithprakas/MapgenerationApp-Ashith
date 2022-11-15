@@ -13,12 +13,10 @@ export class PropertiesPanelComponent implements OnInit {
     this.propertyPanelServiceHandler.invokeSetObjectPanelProperty$.subscribe(
       (Properties) => this.setPropertyPanelForSelectedObjects(Properties)
     );
-    this.propertyPanelServiceHandler.invokeDisablePropertyPanel$.subscribe(() =>
-      this.DisablePropertyPanel()
-    );
   }
 
   PropertyPanelValues: SetPropertiesModel = {
+    disablePropertyPanel: true,
     StrokeWidth: 5,
     StrokeColor: '#9a3c3c',
     FillColor: '#9a3c3c',
@@ -65,16 +63,16 @@ export class PropertiesPanelComponent implements OnInit {
     );
   }
 
-  DisablePropertyPanel() {
-    this.isdisabled = true;
-  }
   setPropertyPanelForSelectedObjects(ObjectProperties: SetPropertiesModel) {
-    this.isdisabled = false;
-    this.PropertyPanelValues.StrokeWidth = ObjectProperties.StrokeWidth;
-    this.PropertyPanelValues.StrokeColor = ObjectProperties.StrokeColor;
-    this.PropertyPanelValues.FillColor = ObjectProperties.FillColor;
-    this.PropertyPanelValues.ObjectAngle = Math.trunc(
-      ObjectProperties.ObjectAngle
-    );
+    if (ObjectProperties.disablePropertyPanel == true) this.isdisabled = true;
+    else {
+      this.isdisabled = false;
+      this.PropertyPanelValues.StrokeWidth = ObjectProperties.StrokeWidth;
+      this.PropertyPanelValues.StrokeColor = ObjectProperties.StrokeColor;
+      this.PropertyPanelValues.FillColor = ObjectProperties.FillColor;
+      this.PropertyPanelValues.ObjectAngle = Math.trunc(
+        ObjectProperties.ObjectAngle
+      );
+    }
   }
 }

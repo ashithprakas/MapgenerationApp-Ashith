@@ -16,19 +16,11 @@ export class PropertiesPanelService {
   invokeSetObjectPropertyFromPanel$ =
     this.invokeSetObjectPropertyFromPanel.asObservable();
 
-  invokeDisablePropertyPanel = new Subject();
-  invokeDisablePropertyPanel$ = this.invokeDisablePropertyPanel.asObservable();
-
-  DisablePropertyPanel() {
-    this.invokeDisablePropertyPanel.next();
-  }
-
   OnObjectSelected(Properties: SetPropertiesModel) {
     this.invokeSetObjectPanelProperty.next(Properties);
   }
 
   onPropertyPanelChange(ChangedPropertyData: Property) {
     this.invokeSetObjectPropertyFromPanel.next(ChangedPropertyData);
-    console.log('Property Panel Changed');
   }
 }
