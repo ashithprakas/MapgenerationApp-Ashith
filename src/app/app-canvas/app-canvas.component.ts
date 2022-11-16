@@ -29,7 +29,7 @@ export class AppCanvasComponent implements OnInit {
 
   updateCanvasState(EventName: string) {
     this.store.dispatch(
-      updateCanvas({
+      new updateCanvas({
         canvasState: JSON.stringify(this.canvas),
         canvasActionType: EventName,
       })
