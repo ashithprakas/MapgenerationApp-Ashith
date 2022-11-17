@@ -10,9 +10,16 @@ export const UPDATE_CANVAS = '[Canvas] Update Canvas';
 export const UNDO_CANVAS = '[Canvas] Undo Canvas';
 
 export class updateCanvas implements Action {
-  readonly type = UPDATE_CANVAS;
+  type = UPDATE_CANVAS;
 
   constructor(public payload: CanvasModel) {}
 }
+export class UndoCanvas implements Action {
+  type = UNDO_CANVAS;
 
-export type Actions = updateCanvas;
+  constructor(
+    public payload: CanvasModel = { canvasState: '', canvasActionType: '' }
+  ) {}
+}
+
+export type Actions = updateCanvas | UndoCanvas;

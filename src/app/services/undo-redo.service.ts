@@ -7,10 +7,12 @@ import { CanvasModel } from '../model/canvas-model';
 export class UndoRedoService {
   constructor() {}
 
-  CanvasMemory: Array<string> = Array<string>(10);
-  index: number = 0;
+  CanvasMemory: Array<CanvasModel> = [];
   pushtoStack(Data: CanvasModel) {
-    this.CanvasMemory[this.index++] = Data.canvasState;
+    this.CanvasMemory.push(Data);
     console.log(this.CanvasMemory);
+  }
+  undoCanvasMemory() {
+    return this.CanvasMemory.pop();
   }
 }

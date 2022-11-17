@@ -3,7 +3,7 @@ import { fabric } from 'fabric';
 import { CanvasServiceService } from '../services/canvas-service.service';
 import { EventInspectorService } from '../services/eventInspector.service';
 import { PropertiesPanelService } from '../services/properties-panel.service';
-import { updateCanvas } from '../store/canvas.actions';
+import { UndoCanvas, updateCanvas } from '../store/canvas.actions';
 import { Store } from '@ngrx/store';
 import { Property, SetPropertiesModel } from '../model/canvas-model';
 @Component({
@@ -34,6 +34,9 @@ export class AppCanvasComponent implements OnInit {
         canvasActionType: EventName,
       })
     );
+  }
+  undoAction() {
+    this.store.dispatch(new UndoCanvas());
   }
   AddShapeToCanvas(ObjectToBeRendered: fabric.Object) {
     this.canvas.add(ObjectToBeRendered);

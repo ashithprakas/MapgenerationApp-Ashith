@@ -14,28 +14,9 @@ export function reducer(state = initialState, action: CanvasAction.Actions) {
     case CanvasAction.UPDATE_CANVAS:
       const payload = action.payload;
       return { ...state, ...payload };
-
+    case CanvasAction.UNDO_CANVAS:
+      return { ...state };
     default:
       return state;
   }
 }
-
-// export function undoRedoMetaReducer(
-//   undoRedoServiceHandler: UndoRedoService
-// ): MetaReducer<any> {
-//   function undoRedo(
-//     reducer: ActionReducer<CanvasModel, Action>
-//   ): ActionReducer<CanvasModel, Action> {
-//     return (state, action: Action) => {
-//       let modifiedAction: CanvasAction = action;
-
-//       switch (action.type) {
-//         case '[Canvas] Update Canvas':
-//           console.log('update case');
-//           console.log(action.canvasState);
-//       }
-//       return reducer(state, modifiedAction);
-//     };
-//   }
-//   return undoRedo;
-// }
