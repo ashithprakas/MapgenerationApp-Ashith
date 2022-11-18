@@ -15,7 +15,7 @@ export function reducer(
   switch (action.type) {
     case CanvasAction.UPDATE_CANVAS:
       const payload = action.payload;
-      console.log(action);
+
       return { ...state, ...payload };
     case CanvasAction.UNDO_CANVAS:
       return {

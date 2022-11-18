@@ -40,8 +40,6 @@ export function undoRedoMetaReducer(
           modifiedAction.payload.canvasActionType = 'undo Event';
           modifiedAction.payload.canvasState = previousState!;
           modifiedAction.payload.isUndoState = true;
-
-          console.log(modifiedAction);
       }
       return reducer(state, modifiedAction);
     };

@@ -6,8 +6,7 @@ import { PropertiesPanelService } from '../services/properties-panel.service';
 import { UndoCanvas, updateCanvas } from '../store/canvas.actions';
 import { select, Store } from '@ngrx/store';
 import { Property, SetPropertiesModel } from '../model/canvas-model';
-import { Subscription } from 'rxjs';
-import { canvasStateSelector, undoCanvas } from '../store/canvas.selector';
+import { undoCanvas } from '../store/canvas.selector';
 @Component({
   selector: 'app-app-canvas',
   templateUrl: './app-canvas.component.html',
@@ -36,6 +35,7 @@ export class AppCanvasComponent implements OnInit {
     this.canvas.setWidth(document.body.scrollWidth);
     this.canvas.setHeight(document.body.scrollHeight);
     this.canvas.set('backgroundColor', '#808080');
+    this.updateCanvasState('initilized');
     console.log('Canvas Initialized');
   }
 
@@ -102,6 +102,7 @@ export class AppCanvasComponent implements OnInit {
     );
 
     this.canvas.on('object:added', () => {
+      console.log('oobjectAdded');
       let ObjectName = this.CanvasServiceHandler.ObjectName;
       this.EventServiceHandler.addObjectEventMessage(
         ObjectName + ' Object Has Been Created Successfully!'
