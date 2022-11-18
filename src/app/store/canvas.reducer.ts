@@ -5,6 +5,7 @@ import { CanvasModel } from '../model/canvas-model';
 const initialState: CanvasModel = {
   canvasState: JSON.stringify(fabric.Canvas),
   canvasActionType: 'initialize',
+  isUndoState: false,
 };
 
 export function reducer(state = initialState, action: CanvasAction.Actions) {

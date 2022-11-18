@@ -23,7 +23,7 @@ export class AppCanvasComponent implements OnInit {
     this.eventState$ = this.store
       .pipe(select(canvasStateSelector))
       .subscribe((x) => {
-        console.log('store', x);
+        //console.log('store', x);
       });
   }
   private canvas: any;
@@ -42,6 +42,7 @@ export class AppCanvasComponent implements OnInit {
       new updateCanvas({
         canvasState: JSON.stringify(this.canvas),
         canvasActionType: EventName,
+        isUndoState: false,
       })
     );
   }

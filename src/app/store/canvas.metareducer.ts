@@ -14,12 +14,12 @@ export function undoRedoMetaReducer(
       let modifiedAction = action;
       switch (action.type) {
         case UPDATE_CANVAS:
-          undoRedoServiceHandler.pushtoStack(state as CanvasModel);
+          if (state != undefined) undoRedoServiceHandler.pushtoStack(state);
           break;
         case UNDO_CANVAS:
           let previousState = undoRedoServiceHandler.undoCanvasMemory();
           console.log(previousState);
-          state = previousState;
+        //state = previousState;
       }
       return reducer(state, modifiedAction);
     };

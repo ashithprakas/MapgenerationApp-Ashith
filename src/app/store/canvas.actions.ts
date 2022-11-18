@@ -18,7 +18,11 @@ export class UndoCanvas implements Action {
   type = UNDO_CANVAS;
 
   constructor(
-    public payload: CanvasModel = { canvasState: '', canvasActionType: '' }
+    public payload: CanvasModel = {
+      canvasState: '',
+      canvasActionType: '',
+      isUndoState: true,
+    }
   ) {}
 }
 
