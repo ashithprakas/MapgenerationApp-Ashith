@@ -7,7 +7,7 @@ import { UndoCanvas, updateCanvas } from '../store/canvas.actions';
 import { select, Store } from '@ngrx/store';
 import { Property, SetPropertiesModel } from '../model/canvas-model';
 import { Subscription } from 'rxjs';
-import { canvasStateSelector } from '../store/canvas.selector';
+import { canvasStateSelector, undoCanvas } from '../store/canvas.selector';
 @Component({
   selector: 'app-app-canvas',
   templateUrl: './app-canvas.component.html',
@@ -20,14 +20,16 @@ export class AppCanvasComponent implements OnInit {
     private PropertyPanelHandler: PropertiesPanelService,
     private store: Store
   ) {
-    this.eventState$ = this.store
-      .pipe(select(canvasStateSelector))
-      .subscribe((x) => {
-        //console.log('store', x);
-      });
+    this.undoCanvasEvent$.subscribe((data) => {
+      if (data != null) {
+        this.canvas.loadFromJSON(data, () => {
+          this.canvas.renderAll();
+        });
+      }
+    });
   }
   private canvas: any;
-  eventState$!: Subscription;
+  undoCanvasEvent$ = this.store.pipe(select(undoCanvas));
 
   canvasInitialize() {
     this.canvas = new fabric.Canvas('canvasArea');

@@ -8,14 +8,9 @@ import { AppState } from '../store/canvas.index';
 export class UndoRedoService {
   constructor() {}
 
-  CanvasMemory: Array<AppState> = [];
-  pushtoStack(Data: any) {
-    let jsonedata = JSON.parse(
-      JSON.stringify(Data.CanvasData.canvasActionType)
-    );
-    console.log('this is data ', Data.CanvasData.canvasState);
-    console.log('this is data state ', jsonedata.canvasActionType);
-    //this.CanvasMemory.push(Data);
+  CanvasMemory: Array<string> = [];
+  pushtoStack(Data: CanvasModel) {
+    if (Data != undefined) this.CanvasMemory.push(Data.canvasState);
   }
   undoCanvasMemory() {
     return this.CanvasMemory.pop();

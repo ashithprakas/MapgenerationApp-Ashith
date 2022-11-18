@@ -8,13 +8,20 @@ const initialState: CanvasModel = {
   isUndoState: false,
 };
 
-export function reducer(state = initialState, action: CanvasAction.Actions) {
+export function reducer(
+  state: CanvasModel = initialState,
+  action: CanvasAction.Actions
+) {
   switch (action.type) {
     case CanvasAction.UPDATE_CANVAS:
       const payload = action.payload;
+      console.log(action);
       return { ...state, ...payload };
     case CanvasAction.UNDO_CANVAS:
-      return { ...state };
+      return {
+        ...state,
+        ...action.payload,
+      };
     default:
       return state;
   }

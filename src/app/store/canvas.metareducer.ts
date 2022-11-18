@@ -1,25 +1,47 @@
 import { UndoRedoService } from '../services/undo-redo.service';
 import { MetaReducer, ActionReducer, Action } from '@ngrx/store';
 import { CanvasModel } from '../model/canvas-model';
-import { UPDATE_CANVAS, Actions, UNDO_CANVAS } from './canvas.actions';
-import { Canvas } from 'fabric/fabric-impl';
+import {
+  UPDATE_CANVAS,
+  Actions,
+  UNDO_CANVAS,
+  UndoCanvasAction,
+} from './canvas.actions';
+import { AppState } from './canvas.index';
 
 export function undoRedoMetaReducer(
   undoRedoServiceHandler: UndoRedoService
-): MetaReducer<CanvasModel, Actions> {
+): MetaReducer<AppState, Actions> {
   function undoRedo(
-    reducer: ActionReducer<CanvasModel, Actions>
-  ): ActionReducer<CanvasModel, Actions> {
+    reducer: ActionReducer<AppState, Actions>
+  ): ActionReducer<AppState, Actions> {
     return (state, action: Actions) => {
-      let modifiedAction = action;
+      let modifiedAction: Actions = {
+        type: '',
+        payload: {
+          canvasActionType: '',
+          canvasState: '',
+          isUndoState: false,
+        },
+      };
       switch (action.type) {
         case UPDATE_CANVAS:
-          if (state != undefined) undoRedoServiceHandler.pushtoStack(state);
+          if (state != undefined)
+            undoRedoServiceHandler.pushtoStack(state.CanvasData);
+          modifiedAction.type = UPDATE_CANVAS;
+          modifiedAction.payload.canvasActionType =
+            action.payload.canvasActionType;
+          modifiedAction.payload.canvasState = action.payload.canvasState;
+          modifiedAction.payload.isUndoState = false;
           break;
         case UNDO_CANVAS:
           let previousState = undoRedoServiceHandler.undoCanvasMemory();
-          console.log(previousState);
-        //state = previousState;
+          modifiedAction.type = UNDO_CANVAS;
+          modifiedAction.payload.canvasActionType = 'undo Event';
+          modifiedAction.payload.canvasState = previousState!;
+          modifiedAction.payload.isUndoState = true;
+
+          console.log(modifiedAction);
       }
       return reducer(state, modifiedAction);
     };

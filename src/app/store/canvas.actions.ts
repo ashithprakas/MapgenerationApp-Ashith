@@ -25,5 +25,10 @@ export class UndoCanvas implements Action {
     }
   ) {}
 }
+export class UndoCanvasAction implements Action {
+  type = UPDATE_CANVAS;
 
-export type Actions = updateCanvas | UndoCanvas;
+  constructor(public payload: CanvasModel) {}
+}
+
+export type Actions = updateCanvas | UndoCanvas | UndoCanvasAction;
