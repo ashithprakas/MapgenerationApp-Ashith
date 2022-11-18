@@ -4,8 +4,10 @@ import { CanvasServiceService } from '../services/canvas-service.service';
 import { EventInspectorService } from '../services/eventInspector.service';
 import { PropertiesPanelService } from '../services/properties-panel.service';
 import { UndoCanvas, updateCanvas } from '../store/canvas.actions';
-import { Store } from '@ngrx/store';
+import { select, Store } from '@ngrx/store';
 import { Property, SetPropertiesModel } from '../model/canvas-model';
+import { Subscription } from 'rxjs';
+import { canvasStateSelector } from '../store/canvas.selector';
 @Component({
   selector: 'app-app-canvas',
   templateUrl: './app-canvas.component.html',
@@ -17,8 +19,16 @@ export class AppCanvasComponent implements OnInit {
     private EventServiceHandler: EventInspectorService,
     private PropertyPanelHandler: PropertiesPanelService,
     private store: Store
-  ) {}
+  ) {
+    this.eventState$ = this.store
+      .pipe(select(canvasStateSelector))
+      .subscribe((x) => {
+        console.log('store', x);
+      });
+  }
   private canvas: any;
+  eventState$!: Subscription;
+
   canvasInitialize() {
     this.canvas = new fabric.Canvas('canvasArea');
     this.canvas.setWidth(document.body.scrollWidth);

@@ -1,8 +1,6 @@
-import { createReducer, on } from '@ngrx/store';
 import * as CanvasAction from './canvas.actions';
 import { fabric } from 'fabric';
 import { CanvasModel } from '../model/canvas-model';
-import { UndoRedoService } from '../services/undo-redo.service';
 
 const initialState: CanvasModel = {
   canvasState: JSON.stringify(fabric.Canvas),

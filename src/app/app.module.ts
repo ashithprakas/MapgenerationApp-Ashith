@@ -13,11 +13,11 @@ import { AppCanvasComponent } from './app-canvas/app-canvas.component';
 import { EventInspectorPanelComponent } from './event-inspector-panel/event-inspector-panel.component';
 import { CanvasServiceService } from './services/canvas-service.service';
 import { reducer } from './store/canvas.reducer';
+import { reducers } from './store/canvas.index';
 import { StoreModule, META_REDUCERS } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { environment } from 'src/environments/environment';
 import { UndoRedoService } from './services/undo-redo.service';
-import { reducers } from './store/canvas.index';
 import { undoRedoMetaReducer } from './store/canvas.metareducer';
 
 @NgModule({
