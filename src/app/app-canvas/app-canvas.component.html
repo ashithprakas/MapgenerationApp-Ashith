@@ -1,7 +1,19 @@
 <div class="canvasPanel">
   <canvas id="canvasArea"></canvas>
   <div class="buttonGroup">
-    <button class="canvastoolButton" (click)="undoAction()">Undo</button>
-    <button class="canvastoolButton" (click)="redoAction()">Redo</button>
+    <button
+      class="canvastoolButton"
+      [disabled]="this.isUndoButtonDisabled"
+      (click)="undoAction()"
+    >
+      Undo
+    </button>
+    <button
+      class="canvastoolButton"
+      [disabled]="this.isRedoButtonDisabled"
+      (click)="redoAction()"
+    >
+      Redo
+    </button>
   </div>
 </div>

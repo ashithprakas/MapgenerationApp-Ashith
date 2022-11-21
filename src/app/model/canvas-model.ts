@@ -16,3 +16,7 @@ export interface Property {
   propertyName: string;
   PropertyValue: string | Number;
 }
+export interface UndoRedoButtonToggleModel {
+  isUndoDisabled: boolean;
+  isRedoDisabled: boolean;
+}

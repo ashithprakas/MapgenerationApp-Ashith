@@ -9,8 +9,10 @@ import {
   CanvasModel,
   Property,
   SetPropertiesModel,
+  UndoRedoButtonToggleModel,
 } from '../model/canvas-model';
 import { undoCanvas } from '../store/canvas.selector';
+import { UndoRedoService } from '../services/undo-redo.service';
 @Component({
   selector: 'app-app-canvas',
   templateUrl: './app-canvas.component.html',
@@ -21,6 +23,7 @@ export class AppCanvasComponent implements OnInit {
     private CanvasServiceHandler: CanvasServiceService,
     private EventServiceHandler: EventInspectorService,
     private PropertyPanelHandler: PropertiesPanelService,
+    private UndoRedoServiceHandler: UndoRedoService,
     private store: Store
   ) {
     this.undoCanvasEvent$.subscribe((data) => {
@@ -30,9 +33,17 @@ export class AppCanvasComponent implements OnInit {
         });
       }
     });
+
+    this.UndoRedoServiceHandler.invokeUndoRedoButtonToggler$.subscribe(
+      (UndoRedoToggleState) => {
+        this.UndoRedoButtonToggler(UndoRedoToggleState);
+      }
+    );
   }
   private canvas: any;
   undoCanvasEvent$ = this.store.pipe(select(undoCanvas));
+  isUndoButtonDisabled: boolean = true;
+  isRedoButtonDisabled: boolean = true;
 
   canvasInitialize() {
     this.canvas = new fabric.Canvas('canvasArea');
@@ -62,6 +73,10 @@ export class AppCanvasComponent implements OnInit {
   }
   redoAction() {
     this.store.dispatch(new RedoCanvas());
+  }
+  UndoRedoButtonToggler(UndoRedoToggleState: UndoRedoButtonToggleModel) {
+    this.isUndoButtonDisabled = UndoRedoToggleState.isUndoDisabled;
+    this.isRedoButtonDisabled = UndoRedoToggleState.isRedoDisabled;
   }
   AddShapeToCanvas(ObjectToBeRendered: fabric.Object) {
     this.canvas.add(ObjectToBeRendered);
@@ -105,6 +120,7 @@ export class AppCanvasComponent implements OnInit {
     this.canvas.renderAll();
     this.updateCanvasState('Property Change');
   }
+
   ngOnInit(): void {
     this.canvasInitialize();
     this.CanvasServiceHandler.invokeAddShapeToCanvasFuntion$.subscribe(

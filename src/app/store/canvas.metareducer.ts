@@ -39,17 +39,22 @@ export function undoRedoMetaReducer(
           let previousState = undoRedoServiceHandler.undoCanvasAction(
             action.payload
           );
-          modifiedAction.type = UNDO_CANVAS;
-          modifiedAction.payload.canvasActionType = 'undo Event';
-          modifiedAction.payload.canvasState = previousState!;
-          modifiedAction.payload.isUndoRedoState = true;
+          if (previousState != undefined) {
+            modifiedAction.type = UNDO_CANVAS;
+            modifiedAction.payload.canvasActionType = 'undo Event';
+            modifiedAction.payload.canvasState = previousState!;
+            modifiedAction.payload.isUndoRedoState = true;
+          }
+
           break;
         case REDO_CANVAS:
           let redoState = undoRedoServiceHandler.redoCanvasAction();
-          modifiedAction.type = REDO_CANVAS;
-          modifiedAction.payload.canvasActionType = 'redo Event';
-          modifiedAction.payload.canvasState = redoState!;
-          modifiedAction.payload.isUndoRedoState = true;
+          if (redoState != undefined) {
+            modifiedAction.type = REDO_CANVAS;
+            modifiedAction.payload.canvasActionType = 'redo Event';
+            modifiedAction.payload.canvasState = redoState!;
+            modifiedAction.payload.isUndoRedoState = true;
+          }
       }
       return reducer(state, modifiedAction);
     };
