@@ -39,17 +39,16 @@ export class UndoRedoService {
     this.invokeUndoRedoButtonToggler.next(this.UndoRedoDisableState);
   }
 
-  pushtoUndoArray(Data: CanvasModel) {
+  SaveStateToMemory(Data: CanvasModel) {
     if (Data.canvasState != undefined) {
-      this.UndoCanvasMemory.push(Data.canvasState);
+      this.PushtoUndoStack(Data.canvasState);
       this.RedoCanvasMemory = [];
       console.log('from push to undo array');
       this.CheckMemory();
     }
   }
   undoCanvasAction(currentState: CanvasModel) {
-    this.RedoCanvasMemory.push(currentState.canvasState);
-
+    this.PushToRedoStack(currentState.canvasState);
     if (this.UndoCanvasMemory.length >= 0) {
       let popedUndoState = this.UndoCanvasMemory.pop();
       this.CheckMemory();
@@ -58,13 +57,21 @@ export class UndoRedoService {
       return undefined;
     }
   }
-  redoCanvasAction() {
+  redoCanvasAction(previousState: CanvasModel) {
     if (this.RedoCanvasMemory.length >= 0) {
       let popedRedoState = this.RedoCanvasMemory.pop();
+      this.PushtoUndoStack(previousState.canvasState);
       this.CheckMemory();
       return popedRedoState;
     } else {
       return undefined;
     }
+  }
+
+  PushtoUndoStack(State: string) {
+    this.UndoCanvasMemory.push(State);
+  }
+  PushToRedoStack(State: string) {
+    this.RedoCanvasMemory.push(State);
   }
 }

@@ -28,7 +28,7 @@ export function undoRedoMetaReducer(
       switch (action.type) {
         case UPDATE_CANVAS:
           if (state != undefined)
-            undoRedoServiceHandler.pushtoUndoArray(state.CanvasData);
+            undoRedoServiceHandler.SaveStateToMemory(state.CanvasData);
           modifiedAction.type = UPDATE_CANVAS;
           modifiedAction.payload.canvasActionType =
             action.payload.canvasActionType;
@@ -48,7 +48,9 @@ export function undoRedoMetaReducer(
 
           break;
         case REDO_CANVAS:
-          let redoState = undoRedoServiceHandler.redoCanvasAction();
+          let redoState = undoRedoServiceHandler.redoCanvasAction(
+            state!.CanvasData
+          );
           if (redoState != undefined) {
             modifiedAction.type = REDO_CANVAS;
             modifiedAction.payload.canvasActionType = 'redo Event';
