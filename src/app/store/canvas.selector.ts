@@ -13,7 +13,7 @@ export const canvasStateSelector = createSelector(
 export const undoCanvas = createSelector(
   getCanvas,
   (CanvasState: CanvasModel) => {
-    if (CanvasState.isUndoState) {
+    if (CanvasState.isUndoRedoState) {
       return CanvasState.canvasState;
     } else {
       return null;

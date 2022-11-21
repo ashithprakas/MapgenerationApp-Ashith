@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Canvas } from 'fabric/fabric-impl';
 import { CanvasModel } from '../model/canvas-model';
 
 @Injectable({
@@ -7,13 +8,25 @@ import { CanvasModel } from '../model/canvas-model';
 export class UndoRedoService {
   constructor() {}
 
-  CanvasMemory: Array<string> = [];
-  pushtoStack(Data: CanvasModel) {
-    if (Data != undefined) this.CanvasMemory.push(Data.canvasState);
-    console.log(this.CanvasMemory);
+  UndoCanvasMemory: Array<string> = [];
+  RedoCanvasMemory: Array<string> = [];
+
+  pushtoUndoArray(Data: CanvasModel) {
+    if (Data != undefined) this.UndoCanvasMemory.push(Data.canvasState);
   }
-  undoCanvasMemory() {
-    console.log('undo', this.CanvasMemory);
-    return this.CanvasMemory.pop();
+  undoCanvasAction(currentState: CanvasModel) {
+    this.RedoCanvasMemory.push(currentState.canvasState);
+    let undoState: string = this.UndoCanvasMemory.pop()!;
+    console.log(
+      'undo memory ',
+      this.UndoCanvasMemory,
+      'redo memory ',
+      this.RedoCanvasMemory
+    );
+    return undoState;
+  }
+  redoCanvasAction() {
+    console.log;
+    return this.RedoCanvasMemory.pop();
   }
 }

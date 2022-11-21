@@ -3,9 +3,13 @@ import { fabric } from 'fabric';
 import { CanvasServiceService } from '../services/canvas-service.service';
 import { EventInspectorService } from '../services/eventInspector.service';
 import { PropertiesPanelService } from '../services/properties-panel.service';
-import { UndoCanvas, updateCanvas } from '../store/canvas.actions';
+import { RedoCanvas, UndoCanvas, updateCanvas } from '../store/canvas.actions';
 import { select, Store } from '@ngrx/store';
-import { Property, SetPropertiesModel } from '../model/canvas-model';
+import {
+  CanvasModel,
+  Property,
+  SetPropertiesModel,
+} from '../model/canvas-model';
 import { undoCanvas } from '../store/canvas.selector';
 @Component({
   selector: 'app-app-canvas',
@@ -44,15 +48,24 @@ export class AppCanvasComponent implements OnInit {
       new updateCanvas({
         canvasState: JSON.stringify(this.canvas),
         canvasActionType: EventName,
-        isUndoState: false,
+        isUndoRedoState: false,
       })
     );
   }
   undoAction() {
-    this.store.dispatch(new UndoCanvas());
+    let currentState: CanvasModel = {
+      canvasActionType: 'redo Event',
+      canvasState: JSON.stringify(this.canvas),
+      isUndoRedoState: true,
+    };
+    this.store.dispatch(new UndoCanvas(currentState));
+  }
+  redoAction() {
+    this.store.dispatch(new RedoCanvas());
   }
   AddShapeToCanvas(ObjectToBeRendered: fabric.Object) {
     this.canvas.add(ObjectToBeRendered);
+    this.updateCanvasState('Add Event');
   }
 
   GetObjectType() {
@@ -102,12 +115,10 @@ export class AppCanvasComponent implements OnInit {
     );
 
     this.canvas.on('object:added', () => {
-      console.log('oobjectAdded');
       let ObjectName = this.CanvasServiceHandler.ObjectName;
       this.EventServiceHandler.addObjectEventMessage(
         ObjectName + ' Object Has Been Created Successfully!'
       );
-      this.updateCanvasState('Add Event');
     });
     this.canvas.on('object:rotating', () => {
       this.EventServiceHandler.addObjectEventMessage(

@@ -8,6 +8,7 @@ import { CanvasModel } from '../model/canvas-model';
 
 export const UPDATE_CANVAS = '[Canvas] Update Canvas';
 export const UNDO_CANVAS = '[Canvas] Undo Canvas';
+export const REDO_CANVAS = '[Canvas] Redo Canvas';
 
 export class updateCanvas implements Action {
   type = UPDATE_CANVAS;
@@ -17,11 +18,15 @@ export class updateCanvas implements Action {
 export class UndoCanvas implements Action {
   type = UNDO_CANVAS;
 
+  constructor(public payload: CanvasModel) {}
+}
+export class RedoCanvas implements Action {
+  type = REDO_CANVAS;
   constructor(
     public payload: CanvasModel = {
       canvasState: '',
       canvasActionType: '',
-      isUndoState: true,
+      isUndoRedoState: true,
     }
   ) {}
 }

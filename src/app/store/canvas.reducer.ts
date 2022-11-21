@@ -5,7 +5,7 @@ import { CanvasModel } from '../model/canvas-model';
 const initialState: CanvasModel = {
   canvasState: JSON.stringify(fabric.Canvas),
   canvasActionType: 'initialize',
-  isUndoState: false,
+  isUndoRedoState: false,
 };
 
 export function reducer(
@@ -18,6 +18,11 @@ export function reducer(
 
       return { ...state, ...payload };
     case CanvasAction.UNDO_CANVAS:
+      return {
+        ...state,
+        ...action.payload,
+      };
+    case CanvasAction.REDO_CANVAS:
       return {
         ...state,
         ...action.payload,

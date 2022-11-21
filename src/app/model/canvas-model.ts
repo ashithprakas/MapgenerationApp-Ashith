@@ -1,7 +1,7 @@
 export interface CanvasModel {
   canvasState: string;
   canvasActionType: string;
-  isUndoState: boolean;
+  isUndoRedoState: boolean;
 }
 
 export interface SetPropertiesModel {

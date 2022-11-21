@@ -6,6 +6,7 @@ import {
   Actions,
   UNDO_CANVAS,
   UndoCanvasAction,
+  REDO_CANVAS,
 } from './canvas.actions';
 import { AppState } from './canvas.index';
 
@@ -21,25 +22,34 @@ export function undoRedoMetaReducer(
         payload: {
           canvasActionType: '',
           canvasState: '',
-          isUndoState: false,
+          isUndoRedoState: false,
         },
       };
       switch (action.type) {
         case UPDATE_CANVAS:
           if (state != undefined)
-            undoRedoServiceHandler.pushtoStack(state.CanvasData);
+            undoRedoServiceHandler.pushtoUndoArray(state.CanvasData);
           modifiedAction.type = UPDATE_CANVAS;
           modifiedAction.payload.canvasActionType =
             action.payload.canvasActionType;
           modifiedAction.payload.canvasState = action.payload.canvasState;
-          modifiedAction.payload.isUndoState = false;
+          modifiedAction.payload.isUndoRedoState = false;
           break;
         case UNDO_CANVAS:
-          let previousState = undoRedoServiceHandler.undoCanvasMemory();
+          let previousState = undoRedoServiceHandler.undoCanvasAction(
+            action.payload
+          );
           modifiedAction.type = UNDO_CANVAS;
           modifiedAction.payload.canvasActionType = 'undo Event';
           modifiedAction.payload.canvasState = previousState!;
-          modifiedAction.payload.isUndoState = true;
+          modifiedAction.payload.isUndoRedoState = true;
+          break;
+        case REDO_CANVAS:
+          let redoState = undoRedoServiceHandler.redoCanvasAction();
+          modifiedAction.type = REDO_CANVAS;
+          modifiedAction.payload.canvasActionType = 'redo Event';
+          modifiedAction.payload.canvasState = redoState!;
+          modifiedAction.payload.isUndoRedoState = true;
       }
       return reducer(state, modifiedAction);
     };
