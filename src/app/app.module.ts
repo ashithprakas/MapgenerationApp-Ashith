@@ -12,10 +12,13 @@ import { PropertiesPanelComponent } from './properties-panel/properties-panel.co
 import { AppCanvasComponent } from './app-canvas/app-canvas.component';
 import { EventInspectorPanelComponent } from './event-inspector-panel/event-inspector-panel.component';
 import { CanvasServiceService } from './services/canvas-service.service';
-import { canvasReducer } from './store/canvas.reducer';
-import { StoreModule } from '@ngrx/store';
+import { reducer } from './store/canvas.reducer';
+import { reducers } from './store/canvas.index';
+import { StoreModule, META_REDUCERS } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { environment } from 'src/environments/environment';
+import { UndoRedoService } from './services/undo-redo.service';
+import { undoRedoMetaReducer } from './store/canvas.metareducer';
 
 @NgModule({
   declarations: [
@@ -29,7 +32,7 @@ import { environment } from 'src/environments/environment';
   imports: [
     FormsModule,
     BrowserModule,
-    StoreModule.forRoot({ canvasReducer: canvasReducer }),
+    StoreModule.forRoot(reducers),
     StoreDevtoolsModule.instrument({
       maxAge: 25, // Retains last 25 states
       logOnly: environment.production, // Restrict extension to log-only mode
@@ -38,7 +41,15 @@ import { environment } from 'src/environments/environment';
     BrowserAnimationsModule,
     MatGridListModule,
   ],
-  providers: [CanvasServiceService],
+  providers: [
+    CanvasServiceService,
+    {
+      provide: META_REDUCERS,
+      deps: [UndoRedoService],
+      useFactory: undoRedoMetaReducer,
+      multi: true,
+    },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

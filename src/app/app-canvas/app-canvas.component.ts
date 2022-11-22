@@ -3,9 +3,16 @@ import { fabric } from 'fabric';
 import { CanvasServiceService } from '../services/canvas-service.service';
 import { EventInspectorService } from '../services/eventInspector.service';
 import { PropertiesPanelService } from '../services/properties-panel.service';
-import { updateCanvas } from '../store/canvas.actions';
-import { Store } from '@ngrx/store';
-import { Property, SetPropertiesModel } from '../model/canvas-model';
+import { RedoCanvas, UndoCanvas, updateCanvas } from '../store/canvas.actions';
+import { select, Store } from '@ngrx/store';
+import {
+  CanvasModel,
+  Property,
+  SetPropertiesModel,
+  UndoRedoButtonToggleModel,
+} from '../model/canvas-model';
+import { undoCanvas } from '../store/canvas.selector';
+import { UndoRedoService } from '../services/undo-redo.service';
 @Component({
   selector: 'app-app-canvas',
   templateUrl: './app-canvas.component.html',
@@ -16,27 +23,63 @@ export class AppCanvasComponent implements OnInit {
     private CanvasServiceHandler: CanvasServiceService,
     private EventServiceHandler: EventInspectorService,
     private PropertyPanelHandler: PropertiesPanelService,
+    private UndoRedoServiceHandler: UndoRedoService,
     private store: Store
-  ) {}
+  ) {
+    this.undoCanvasEvent$.subscribe((data) => {
+      if (data != null) {
+        this.canvas.loadFromJSON(data, () => {
+          this.canvas.renderAll();
+        });
+      }
+    });
+
+    this.UndoRedoServiceHandler.invokeUndoRedoButtonToggler$.subscribe(
+      (UndoRedoToggleState) => {
+        this.UndoRedoButtonToggler(UndoRedoToggleState);
+      }
+    );
+  }
   private canvas: any;
+  undoCanvasEvent$ = this.store.pipe(select(undoCanvas));
+  isUndoButtonDisabled: boolean = true;
+  isRedoButtonDisabled: boolean = true;
+
   canvasInitialize() {
     this.canvas = new fabric.Canvas('canvasArea');
     this.canvas.setWidth(document.body.scrollWidth);
     this.canvas.setHeight(document.body.scrollHeight);
     this.canvas.set('backgroundColor', '#808080');
-    console.log('Canvas Initialized');
+    this.updateCanvasState('initilized');
   }
 
   updateCanvasState(EventName: string) {
     this.store.dispatch(
-      updateCanvas({
+      new updateCanvas({
         canvasState: JSON.stringify(this.canvas),
         canvasActionType: EventName,
+        isUndoRedoState: false,
       })
     );
   }
+  undoAction() {
+    let currentState: CanvasModel = {
+      canvasActionType: 'redo Event',
+      canvasState: JSON.stringify(this.canvas),
+      isUndoRedoState: true,
+    };
+    this.store.dispatch(new UndoCanvas(currentState));
+  }
+  redoAction() {
+    this.store.dispatch(new RedoCanvas());
+  }
+  UndoRedoButtonToggler(UndoRedoToggleState: UndoRedoButtonToggleModel) {
+    this.isUndoButtonDisabled = UndoRedoToggleState.isUndoDisabled;
+    this.isRedoButtonDisabled = UndoRedoToggleState.isRedoDisabled;
+  }
   AddShapeToCanvas(ObjectToBeRendered: fabric.Object) {
     this.canvas.add(ObjectToBeRendered);
+    this.updateCanvasState('Add Event');
   }
 
   GetObjectType() {
@@ -76,6 +119,7 @@ export class AppCanvasComponent implements OnInit {
     this.canvas.renderAll();
     this.updateCanvasState('Property Change');
   }
+
   ngOnInit(): void {
     this.canvasInitialize();
     this.CanvasServiceHandler.invokeAddShapeToCanvasFuntion$.subscribe(
@@ -90,7 +134,6 @@ export class AppCanvasComponent implements OnInit {
       this.EventServiceHandler.addObjectEventMessage(
         ObjectName + ' Object Has Been Created Successfully!'
       );
-      this.updateCanvasState('Add Event');
     });
     this.canvas.on('object:rotating', () => {
       this.EventServiceHandler.addObjectEventMessage(
