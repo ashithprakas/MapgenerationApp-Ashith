@@ -20,9 +20,6 @@ export class UndoRedoService {
     this.invokeUndoRedoButtonToggler.asObservable();
 
   CheckMemory() {
-    console.log(this.UndoRedoDisableState);
-    console.log(this.UndoCanvasMemory.length);
-
     if (this.UndoCanvasMemory.length > 0) {
       this.UndoRedoDisableState.isUndoDisabled = false;
     } else {
@@ -35,7 +32,6 @@ export class UndoRedoService {
       this.UndoRedoDisableState.isRedoDisabled = true;
     }
 
-    console.log(this.UndoRedoDisableState);
     this.invokeUndoRedoButtonToggler.next(this.UndoRedoDisableState);
   }
 
@@ -43,7 +39,7 @@ export class UndoRedoService {
     if (Data.canvasState != undefined) {
       this.PushtoUndoStack(Data.canvasState);
       this.RedoCanvasMemory = [];
-      console.log('from push to undo array');
+
       this.CheckMemory();
     }
   }

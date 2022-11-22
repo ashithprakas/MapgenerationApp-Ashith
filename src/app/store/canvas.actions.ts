@@ -1,11 +1,6 @@
 import { Action } from '@ngrx/store';
 import { CanvasModel } from '../model/canvas-model';
 
-// export const updateCanvas = createAction(
-//   '[Canvas] Update Canvas',
-//   props<{ canvasState: string; canvasActionType: string }>()
-// );
-
 export const UPDATE_CANVAS = '[Canvas] Update Canvas';
 export const UNDO_CANVAS = '[Canvas] Undo Canvas';
 export const REDO_CANVAS = '[Canvas] Redo Canvas';
