@@ -51,7 +51,6 @@ export class AppCanvasComponent implements OnInit {
     this.canvas.setHeight(document.body.scrollHeight);
     this.canvas.set('backgroundColor', '#808080');
     this.updateCanvasState('initilized');
-    console.log('Canvas Initialized');
   }
 
   updateCanvasState(EventName: string) {
